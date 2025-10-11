@@ -66,7 +66,14 @@ Rviz will open up automatically, set fixed frame to auv/cube_link/lidar_link_sen
 
 Teleoperate using previous commands. 
 
+To launch guppy:
+
 ```
-ros2 topic pub -1 /guppy/thrusters/thrust0C/force geometry_msgs/msg/Vector3 "{x: 5.0, y: 0.0, z: 0.0}"
-ros2 topic pub -1 /guppy/thrusters/thrust0C/torque geometry_msgs/msg/Vector3 "{x: 0.0, y: 0.0, z: 0.2}"
+ros2 launch auv_description guppy_display.launch.py
 ```
+
+To launch slider teleoperation:
+
+```
+ros2 run auv_description guppy_control_test.py
+``
