@@ -51,9 +51,10 @@ install(TARGETS simple_buoyancy
   LIBRARY DESTINATION lib
 )
 
-# --- Keyboard teleop script ---
+# --- Keyboard / Slider teleop script ---
 install(PROGRAMS
   scripts/wasd_teleop.py
+  scripts/guppy_control_test.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

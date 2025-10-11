@@ -89,7 +89,10 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/auv_description" TYPE PROGRAM FILES "/home/sangregorioquimpo/auve2_ws/src/auv_description/scripts/wasd_teleop.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/auv_description" TYPE PROGRAM FILES
+    "/home/sangregorioquimpo/auve2_ws/src/auv_description/scripts/wasd_teleop.py"
+    "/home/sangregorioquimpo/auve2_ws/src/auv_description/scripts/guppy_control_test.py"
+    )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)

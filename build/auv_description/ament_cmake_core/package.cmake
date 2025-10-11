@@ -5,7 +5,7 @@ set(auv_description_BUILD_DEPENDS "rclcpp" "geometry_msgs" "gz-sim8" "gz-plugin2
 set(auv_description_BUILDTOOL_DEPENDS "ament_cmake")
 set(auv_description_BUILD_EXPORT_DEPENDS "rclcpp" "geometry_msgs" "gz-sim8" "gz-plugin2" "gz-math7")
 set(auv_description_BUILDTOOL_EXPORT_DEPENDS )
-set(auv_description_EXEC_DEPENDS "ros_gz_sim" "robot_state_publisher" "joint_state_publisher" "joint_state_publisher_gui" "rviz2" "rclcpp" "geometry_msgs" "gz-sim8" "gz-plugin2" "gz-math7")
+set(auv_description_EXEC_DEPENDS "ros_gz_sim" "robot_state_publisher" "joint_state_publisher" "joint_state_publisher_gui" "rclpy" "python3-pyqt5" "rviz2" "rclcpp" "geometry_msgs" "gz-sim8" "gz-plugin2" "gz-math7")
 set(auv_description_TEST_DEPENDS "ament_lint_auto" "ament_lint_common")
 set(auv_description_GROUP_DEPENDS )
 set(auv_description_MEMBER_OF_GROUPS )

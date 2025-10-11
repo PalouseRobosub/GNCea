@@ -856,6 +856,9 @@ statistics_msgs_DIR:PATH=/opt/ros/jazzy/share/statistics_msgs/cmake
 //The directory containing a CMake configuration file for std_msgs.
 std_msgs_DIR:PATH=/opt/ros/jazzy/share/std_msgs/cmake
 
+//Dependencies for the target
+thruster_plugine1_LIB_DEPENDS:STATIC=general;rclcpp::rclcpp;general;geometry_msgs::geometry_msgs__rosidl_generator_c;general;geometry_msgs::geometry_msgs__rosidl_typesupport_fastrtps_c;general;geometry_msgs::geometry_msgs__rosidl_typesupport_introspection_c;general;geometry_msgs::geometry_msgs__rosidl_typesupport_c;general;geometry_msgs::geometry_msgs__rosidl_typesupport_fastrtps_cpp;general;geometry_msgs::geometry_msgs__rosidl_typesupport_introspection_cpp;general;geometry_msgs::geometry_msgs__rosidl_typesupport_cpp;general;geometry_msgs::geometry_msgs__rosidl_generator_py;general;gz-plugin2::gz-plugin2;general;gz-sim8::gz-sim8;general;gz-math7::gz-math7;
+
 //The directory containing a CMake configuration file for tracetools.
 tracetools_DIR:PATH=/opt/ros/jazzy/share/tracetools/cmake
 

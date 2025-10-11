@@ -1,6 +1,7 @@
 /home/sangregorioquimpo/auve2_ws/install/auv_description/lib/libwasd_body_thrust_plugin.so
 /home/sangregorioquimpo/auve2_ws/install/auv_description/lib/libsimple_buoyancy.so
 /home/sangregorioquimpo/auve2_ws/install/auv_description/lib/auv_description/wasd_teleop.py
+/home/sangregorioquimpo/auve2_ws/install/auv_description/lib/auv_description/guppy_control_test.py
 /home/sangregorioquimpo/auve2_ws/install/auv_description/share/auv_description/urdf/cube/cube_link.xacro
 /home/sangregorioquimpo/auve2_ws/install/auv_description/share/auv_description/urdf/cube/auv.urdf
 /home/sangregorioquimpo/auve2_ws/install/auv_description/share/auv_description/urdf/cube/camera_module.xacro

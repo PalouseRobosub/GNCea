@@ -37,7 +37,9 @@ public:
   {
     model_ = Model(entity);
     if (!model_.Valid(ecm)) {
-      throw std::runtime_error("WasdBodyWrenchPlugin: model invalid");
+      //throw std::runtime_error("WasdBodyWrenchPlugin: model invalid");
+      RCLCPP_ERROR(node_->get_logger(), "Model invalid");
+      return;
     }
 
     // Parameters
@@ -57,18 +59,18 @@ public:
     torque_scale_ = (sdf && sdf->HasElement("torque_scale")) ? sdf->Get<double>("torque_scale") : 1.0;
 
     // Link resolve
-    linkEntity_ = model_.LinkByName(ecm, link_name_);
-    if (linkEntity_ == gz::sim::kNullEntity) {
-      throw std::runtime_error("WasdBodyWrenchPlugin: link '" + link_name_ + "' not found");
-    }
-    link_ = Link(linkEntity_);
+    // linkEntity_ = model_.LinkByName(ecm, link_name_);
+    // if (linkEntity_ == gz::sim::kNullEntity) {
+    //   throw std::runtime_error("WasdBodyWrenchPlugin: link '" + link_name_ + "' not found");
+    // }
+    // link_ = Link(linkEntity_);
 
     // ROS 2 node + subscriptions
     rclcpp::InitOptions opts;
     opts.shutdown_on_signal = false;
     if (!rclcpp::ok()) rclcpp::init(0, nullptr, opts);
 
-    node_ = std::make_shared<rclcpp::Node>("wasd_body_wrench_plugin");
+    node_ = std::make_shared<rclcpp::Node>(("wasd_body_wrench_plugin_e1_" + link_name_).c_str());
     clock_type_ = node_->get_clock()->get_clock_type();
     last_force_time_  = rclcpp::Time(0,0,clock_type_);
     last_torque_time_ = rclcpp::Time(0,0,clock_type_);
@@ -112,6 +114,24 @@ public:
   void PreUpdate(const UpdateInfo &info, EntityComponentManager &ecm) override
   {
     if (info.paused) return;
+
+    // Lazy link resolution
+    if (linkEntity_ == gz::sim::kNullEntity) {
+      auto e = model_.LinkByName(ecm, link_name_);
+      if (e == gz::sim::kNullEntity) {
+        if (node_) {
+          RCLCPP_WARN_THROTTLE(node_->get_logger(), *node_->get_clock(), 2000,
+            "Waiting for link '%s' to appear...", link_name_.c_str());
+        }
+        return; // try again next tick
+      }
+      linkEntity_ = e;
+      link_ = Link(linkEntity_);
+      if (node_) RCLCPP_INFO(node_->get_logger(),
+        "Resolved link '%s' (entity %lu).", link_name_.c_str(), linkEntity_);
+    }
+
+    
 
     if (!velocity_enabled_)
     {

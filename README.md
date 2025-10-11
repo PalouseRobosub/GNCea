@@ -65,3 +65,8 @@ ros2 launch auv_description view_lidar.launch.py
 Rviz will open up automatically, set fixed frame to auv/cube_link/lidar_link_sensor. Add pointcloud2 by topic, and set topic to scan/points.
 
 Teleoperate using previous commands. 
+
+```
+ros2 topic pub -1 /guppy/thrusters/thrust0C/force geometry_msgs/msg/Vector3 "{x: 5.0, y: 0.0, z: 0.0}"
+ros2 topic pub -1 /guppy/thrusters/thrust0C/torque geometry_msgs/msg/Vector3 "{x: 0.0, y: 0.0, z: 0.2}"
+```

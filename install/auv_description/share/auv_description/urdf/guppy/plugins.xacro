@@ -12,7 +12,7 @@
     </gazebo>
   </xacro:macro>
 
-  <!-- <xacro:macro name="wasd_plugin" params="link_name topic">
+  <xacro:macro name="wasd_plugin" params="link_name topic">
     <gazebo>
       <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
         <link_name>${link_name}</link_name>
@@ -23,6 +23,6 @@
         <torque_scale>1.0</torque_scale>
       </plugin>
     </gazebo>
-  </xacro:macro> -->
+  </xacro:macro>
 
 </robot>
