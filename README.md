@@ -7,6 +7,8 @@ https://github.com/user-attachments/assets/06dadf81-c7be-401f-846d-b3b123910d5f
 
 https://github.com/user-attachments/assets/2d361c2b-8436-4f90-ae8d-5ad14b407905
 
+# cube.urdf, an example AUV plugin implementation that is simple, not parameterized
+
 To launch
 
 ```
@@ -34,6 +36,8 @@ ros2 run auv_description wasd_teleop.py   --ros-args     -p force_topic:=/auve1/
 ```
 ros2 run auv_description wasd_teleop.py   --ros-args     -p force_topic:=/auve1/force_body     -p force:=500.0     -p decay:=1.0     -p rate_hz:=1200000000.0
 ```
+
+# auv.urdf, an example AUV plugin implementation that is parameterized
 
 To launch auv.urdf
 
