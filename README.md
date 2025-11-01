@@ -76,4 +76,19 @@ To launch slider teleoperation:
 
 ```
 ros2 run auv_description guppy_control_test.py
-``
+```
+
+# Experimental Control system environment (Gravity & Buoyancy turned off)
+
+To launch experimental control world:
+
+```
+ros2 launch auv_description controlsystemExperimental.launch.py 
+```
+
+To use sliders:
+
+```
+ros2 run auv_description guppy_control_test.py
+```
+

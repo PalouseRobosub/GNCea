@@ -4,6 +4,10 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="guppytest1">
 
+  <gazebo>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+  </gazebo>
+
   <!-- Global material: opaque red -->
   <material name="opaque_red">
     <color rgba="1 0 0 1"/>
@@ -267,74 +271,90 @@
   </gazebo> -->
 
   <!-- Per-thruster plugins -->
+  <!-- THRUSTER OFFSET: "0.27819 0.24536 -0.019075" -->
   <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
       <force_topic>/guppy/thrusters/t0C/force</force_topic>
       <torque_topic>/guppy/thrusters/t0C/torque</torque_topic>
+      <lever>0.27819 0.24536 -0.019075</lever>
       <hold_ms>-1</hold_ms>
       <force_scale>1.0</force_scale>
       <torque_scale>1.0</torque_scale>
     </plugin>
 
+  <!-- THRUSTER OFFSET: "0.2903 -2.5E-05 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
       <force_topic>/guppy/thrusters/t0M/force</force_topic>
       <torque_topic>/guppy/thrusters/t0M/torque</torque_topic>
+      <lever>0.2903 -2.5E-05 -0.013798</lever>
       <hold_ms>-1</hold_ms>
       <force_scale>1.0</force_scale>
       <torque_scale>1.0</torque_scale>
     </plugin>
 
+  <!-- THRUSTER OFFSET: "0.27819 -0.24536 -0.019025" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
       <force_topic>/guppy/thrusters/t1C/force</force_topic>
       <torque_topic>/guppy/thrusters/t1C/torque</torque_topic>
+      <lever>0.27819 -0.24536 -0.019025</lever>
       <hold_ms>-1</hold_ms>
       <force_scale>1.0</force_scale>
       <torque_scale>1.0</torque_scale>
     </plugin>
 
+  <!-- THRUSTER OFFSET: "-2.5E-05 -0.2649 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
       <force_topic>/guppy/thrusters/t1M/force</force_topic>
       <torque_topic>/guppy/thrusters/t1M/torque</torque_topic>
+      <lever>-2.5E-05 -0.2649 -0.013798</lever>
       <hold_ms>-1</hold_ms>
       <force_scale>1.0</force_scale>
       <torque_scale>1.0</torque_scale>
     </plugin>
 
+  <!-- THRUSTER OFFSET: "-0.27819 -0.24536 -0.019075" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
       <force_topic>/guppy/thrusters/t2C/force</force_topic>
       <torque_topic>/guppy/thrusters/t2C/torque</torque_topic>
+      <lever>-0.27819 -0.24536 -0.019075</lever>
       <hold_ms>-1</hold_ms>
       <force_scale>1.0</force_scale>
       <torque_scale>1.0</torque_scale>
     </plugin>
 
+  <!-- THRUSTER OFFSET: "-0.2903 2.5E-05 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
       <force_topic>/guppy/thrusters/t2M/force</force_topic>
       <torque_topic>/guppy/thrusters/t2M/torque</torque_topic>
+      <lever>-0.2903 2.5E-05 -0.013798</lever>
       <hold_ms>-1</hold_ms>
       <force_scale>1.0</force_scale>
       <torque_scale>1.0</torque_scale>
     </plugin>
 
+  <!-- THRUSTER OFFSET: "-0.27819 0.24536 -0.019075" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
       <force_topic>/guppy/thrusters/t3C/force</force_topic>
       <torque_topic>/guppy/thrusters/t3C/torque</torque_topic>
+      <lever>-0.27819 0.24536 -0.019075</lever>
       <hold_ms>-1</hold_ms>
       <force_scale>1.0</force_scale>
       <torque_scale>1.0</torque_scale>
     </plugin>
 
+  <!-- THRUSTER OFFSET: "2.5E-05 0.2649 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
       <force_topic>/guppy/thrusters/t3M/force</force_topic>
       <torque_topic>/guppy/thrusters/t3M/torque</torque_topic>
+      <lever>2.5E-05 0.2649 -0.013798</lever>
       <hold_ms>-1</hold_ms>
       <force_scale>1.0</force_scale>
       <torque_scale>1.0</torque_scale>

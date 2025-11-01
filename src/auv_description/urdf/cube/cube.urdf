@@ -94,6 +94,7 @@
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>cube_link</link_name>
       <topic>auve1/force_body</topic>
+      <lever>0 0 0</lever>
       <hold_ms>-1</hold_ms>
       <scale>1.0</scale>
       <force_scale>1.0</force_scale>

@@ -51,6 +51,13 @@ install(TARGETS simple_buoyancy
   LIBRARY DESTINATION lib
 )
 
+# --- Install worldmodels ---
+install(
+  DIRECTORY worldmodels/
+  DESTINATION share/${PROJECT_NAME}/worldmodels
+)
+
+
 # --- Keyboard / Slider teleop script ---
 install(PROGRAMS
   scripts/wasd_teleop.py

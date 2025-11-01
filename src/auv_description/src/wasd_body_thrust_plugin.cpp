@@ -31,50 +31,51 @@ class WasdBodyWrenchPlugin :
 {
 public:
   void Configure(const Entity &entity,
-                 const std::shared_ptr<const sdf::Element> &sdf,
-                 EntityComponentManager &ecm,
-                 gz::sim::EventManager &) override
+                const std::shared_ptr<const sdf::Element> &sdf,
+                EntityComponentManager &ecm,
+                gz::sim::EventManager &) override
   {
-    model_ = Model(entity);
-    if (!model_.Valid(ecm)) {
-      //throw std::runtime_error("WasdBodyWrenchPlugin: model invalid");
-      RCLCPP_ERROR(node_->get_logger(), "Model invalid");
-      return;
-    }
-
-    // Parameters
-    link_name_ = sdf && sdf->HasElement("link_name") ?
-                 sdf->Get<std::string>("link_name") : "base_link";
-
-    // Topics (absolute recommended)
-    force_topic_  = (sdf && sdf->HasElement("force_topic"))  ? sdf->Get<std::string>("force_topic")  : "/auve1/force_body";
-    torque_topic_ = (sdf && sdf->HasElement("torque_topic")) ? sdf->Get<std::string>("torque_topic") : "/auve1/torque_body";
-
-    // Hold behavior: -1 => hold forever, else ms window
-    hold_ms_ = -1;
-    if (sdf && sdf->HasElement("hold_ms")) hold_ms_ = sdf->Get<int>("hold_ms");
-
-    // Optional scaling
-    force_scale_  = (sdf && sdf->HasElement("force_scale"))  ? sdf->Get<double>("force_scale")  : 1.0;
-    torque_scale_ = (sdf && sdf->HasElement("torque_scale")) ? sdf->Get<double>("torque_scale") : 1.0;
-
-    // Link resolve
-    // linkEntity_ = model_.LinkByName(ecm, link_name_);
-    // if (linkEntity_ == gz::sim::kNullEntity) {
-    //   throw std::runtime_error("WasdBodyWrenchPlugin: link '" + link_name_ + "' not found");
-    // }
-    // link_ = Link(linkEntity_);
-
-    // ROS 2 node + subscriptions
+    // --------------------------------------------------------------------------
+    // 1. Initialize ROS 2 Node FIRST
+    // --------------------------------------------------------------------------
     rclcpp::InitOptions opts;
     opts.shutdown_on_signal = false;
     if (!rclcpp::ok()) rclcpp::init(0, nullptr, opts);
 
-    node_ = std::make_shared<rclcpp::Node>(("wasd_body_wrench_plugin_e1_" + link_name_).c_str());
-    clock_type_ = node_->get_clock()->get_clock_type();
-    last_force_time_  = rclcpp::Time(0,0,clock_type_);
-    last_torque_time_ = rclcpp::Time(0,0,clock_type_);
+    std::string temp_link = (sdf && sdf->HasElement("link_name")) ?
+                            sdf->Get<std::string>("link_name") : "base_link";
 
+    node_ = std::make_shared<rclcpp::Node>(("wasd_body_wrench_plugin_" + temp_link).c_str());
+    clock_type_ = node_->get_clock()->get_clock_type();
+    last_force_time_  = rclcpp::Time(0, 0, clock_type_);
+    last_torque_time_ = rclcpp::Time(0, 0, clock_type_);
+
+    // --------------------------------------------------------------------------
+    // 2. Model + parameters
+    // --------------------------------------------------------------------------
+    model_ = Model(entity);
+    if (!model_.Valid(ecm)) {
+      RCLCPP_ERROR(node_->get_logger(), "Model invalid for entity %lu", entity);
+      return;
+    }
+
+    link_name_ = temp_link;
+    force_topic_  = (sdf && sdf->HasElement("force_topic"))  ? sdf->Get<std::string>("force_topic")  : "/auve1/force_body";
+    torque_topic_ = (sdf && sdf->HasElement("torque_topic")) ? sdf->Get<std::string>("torque_topic") : "/auve1/torque_body";
+    hold_ms_ = (sdf && sdf->HasElement("hold_ms")) ? sdf->Get<int>("hold_ms") : -1;
+    force_scale_  = (sdf && sdf->HasElement("force_scale"))  ? sdf->Get<double>("force_scale")  : 1.0;
+    torque_scale_ = (sdf && sdf->HasElement("torque_scale")) ? sdf->Get<double>("torque_scale") : 1.0;
+
+    if (sdf && sdf->HasElement("lever")) {
+      lever_ = sdf->Get<gz::math::Vector3d>("lever");
+      RCLCPP_INFO(node_->get_logger(),
+                  "Lever arm set to [%.3f, %.3f, %.3f] m",
+                  lever_.X(), lever_.Y(), lever_.Z());
+    }
+
+    // --------------------------------------------------------------------------
+    // 3. Subscriptions
+    // --------------------------------------------------------------------------
     sub_force_ = node_->create_subscription<geometry_msgs::msg::Vector3>(
       force_topic_, 10,
       [this](geometry_msgs::msg::Vector3::SharedPtr msg)
@@ -95,6 +96,9 @@ public:
         have_torque_ = true;
       });
 
+    // --------------------------------------------------------------------------
+    // 4. ROS Executor Thread
+    // --------------------------------------------------------------------------
     exec_ = std::make_shared<rclcpp::executors::SingleThreadedExecutor>();
     exec_->add_node(node_);
 
@@ -107,9 +111,10 @@ public:
     });
 
     RCLCPP_INFO(node_->get_logger(),
-      "WasdBodyWrenchPlugin: link='%s', force_topic='%s', torque_topic='%s', hold_ms=%d, scales=(%.3f, %.3f)",
-      link_name_.c_str(), force_topic_.c_str(), torque_topic_.c_str(), hold_ms_, force_scale_, torque_scale_);
+      "WasdBodyWrenchPlugin loaded for link='%s' (topics: F='%s', T='%s', hold_ms=%d)",
+      link_name_.c_str(), force_topic_.c_str(), torque_topic_.c_str(), hold_ms_);
   }
+
 
   void PreUpdate(const UpdateInfo &info, EntityComponentManager &ecm) override
   {
@@ -169,14 +174,34 @@ public:
     gz::math::Vector3d tau_world = use_torque ? pose.Rot().RotateVector(tau_body) : gz::math::Vector3d::Zero;
 
     // Apply both force and torque in world frame at CoM
-    link_.AddWorldWrench(ecm, f_world, tau_world);
+    // link_.AddWorldWrench(ecm, f_world, tau_world);
+    
 
-    // (Optional) throttle debug
+  // --- Lever-arm torque τ = r × F -------------------------------------------
+  // lever_ is given in the link (base) frame
+    gz::math::Vector3d r_world = pose.Rot().RotateVector(lever_);
+    gz::math::Vector3d tau_lever = r_world.Cross(f_world);
+
+    // Apply the combined wrench on this link
+    link_.AddWorldWrench(ecm, f_world, tau_world + tau_lever);
+    // --------------------------------------------------------------------------
+
+    // Debug (every 60 cycles)
     if (++dbg_counter_ % 60 == 0 && node_) {
       RCLCPP_INFO(node_->get_logger(),
-        "[WRENCH] F[%.1f %.1f %.1f]  Tau[%.1f %.1f %.1f]",
-        f_world.X(), f_world.Y(), f_world.Z(), tau_world.X(), tau_world.Y(), tau_world.Z());
-    }
+        "[%s] F=(%.2f,%.2f,%.2f) τ_total=(%.2f,%.2f,%.2f) τ_lever=(%.2f,%.2f,%.2f)",
+        link_name_.c_str(),
+        f_world.X(), f_world.Y(), f_world.Z(),
+        (tau_world + tau_lever).X(), (tau_world + tau_lever).Y(), (tau_world + tau_lever).Z(),
+        tau_lever.X(), tau_lever.Y(), tau_lever.Z());
+    }    
+
+    // // (Optional) throttle debug
+    // if (++dbg_counter_ % 60 == 0 && node_) {
+    //   RCLCPP_INFO(node_->get_logger(),
+    //     "[WRENCH] F[%.1f %.1f %.1f]  Tau[%.1f %.1f %.1f]",
+    //     f_world.X(), f_world.Y(), f_world.Z(), tau_world.X(), tau_world.Y(), tau_world.Z());
+    // }
   }
 
   ~WasdBodyWrenchPlugin() override
@@ -207,6 +232,8 @@ private:
 
   gz::math::Vector3d cmd_force_body_{0,0,0};
   gz::math::Vector3d cmd_torque_body_{0,0,0};
+  gz::math::Vector3d lever_{0, 0, 0};
+
   rclcpp::Time last_force_time_;
   rclcpp::Time last_torque_time_;
   rcl_clock_type_t clock_type_;
