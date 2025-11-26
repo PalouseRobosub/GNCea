@@ -26,6 +26,15 @@ sudo rosdep init || true && rosdep update && \
 rosdep install --from-paths src --ignore-src -r -y --rosdistro jazzy
 ```
 
+To build:
+
+```
+colcon build
+source install/setup.bash
+```
+
+Use whatever commands below to launch any desired launch file.
+
 # cube.urdf, an example AUV plugin implementation that is simple, not parameterized
 
 To launch
