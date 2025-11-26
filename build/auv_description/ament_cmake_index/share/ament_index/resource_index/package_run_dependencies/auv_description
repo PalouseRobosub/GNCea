@@ -1,1 +1,0 @@
-rclcpp;geometry_msgs;gz-sim8;gz-plugin2;gz-math7;ros_gz_sim;robot_state_publisher;joint_state_publisher;joint_state_publisher_gui;rclpy;python3-pyqt5;rviz2;ament_lint_auto;ament_lint_common

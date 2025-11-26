@@ -1,4 +1,0 @@
-[01m[K/home/sangregorioquimpo/auve2_ws/src/auv_description/src/simple_buoyancy.cc:[m[K In member function ‘[01m[Kvirtual void gz::sim::v8::systems::SimpleBuoyancy::[01;32m[KPreUpdate[m[K(const gz::sim::v8::UpdateInfo&, gz::sim::v8::EntityComponentManager&)[m[K’:
-[01m[K/home/sangregorioquimpo/auve2_ws/src/auv_description/src/simple_buoyancy.cc:87:16:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Km[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
-   87 |   const double [01;35m[Km[m[K = inertial->Data().MassMatrix().Mass();
-      |                [01;35m[K^[m[K

@@ -1,6 +1,0 @@
-/home/sangregorioquimpo/auve2_ws/install/auv_description/lib/libwasd_body_thrust_plugin.so
-/home/sangregorioquimpo/auve2_ws/install/auv_description/lib/libsimple_buoyancy.so
-/home/sangregorioquimpo/auve2_ws/install/auv_description/share/auv_description/cmake/wasd_body_thrust_pluginTargetsExport.cmake
-/home/sangregorioquimpo/auve2_ws/install/auv_description/share/auv_description/cmake/wasd_body_thrust_pluginTargetsExport-noconfig.cmake
-/home/sangregorioquimpo/auve2_ws/install/auv_description/share/auv_description/cmake/simple_buoyancyTargetsExport.cmake
-/home/sangregorioquimpo/auve2_ws/install/auv_description/share/auv_description/cmake/simple_buoyancyTargetsExport-noconfig.cmake
