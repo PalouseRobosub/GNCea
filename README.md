@@ -13,6 +13,19 @@ https://github.com/user-attachments/assets/06dadf81-c7be-401f-846d-b3b123910d5f
 
 https://github.com/user-attachments/assets/2d361c2b-8436-4f90-ae8d-5ad14b407905
 
+# PREREQUISITES
+
+Assuming ROS2 jazzy and gazebo harmonic is installed, other dependencies need to be installed to run this project
+
+```
+cd GNCea
+sudo apt update && sudo apt install -y \
+  ros-jazzy-desktop ros-jazzy-ros-gz-sim ros-jazzy-ros-gz-bridge ros-jazzy-xacro \
+  python3-colcon-common-extensions python3-rosdep git && \
+sudo rosdep init || true && rosdep update && \
+rosdep install --from-paths src --ignore-src -r -y --rosdistro jazzy
+```
+
 # cube.urdf, an example AUV plugin implementation that is simple, not parameterized
 
 To launch
@@ -75,6 +88,8 @@ ros2 launch auv_description view_lidar.launch.py
 Rviz will open up automatically, set fixed frame to auv/cube_link/lidar_link_sensor. Add pointcloud2 by topic, and set topic to scan/points.
 
 Teleoperate using previous commands. 
+
+# GUPPY, AUV for 2026 robosub competition
 
 To launch guppy:
 
