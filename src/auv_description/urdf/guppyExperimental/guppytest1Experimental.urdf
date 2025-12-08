@@ -281,14 +281,14 @@
   </joint>
   
 
-  <!-- <gazebo>
+  <gazebo>
     <plugin filename="libsimple_buoyancy.so" name="gz::sim::systems::SimpleBuoyancy">
       <link_name>base_link</link_name>
       <water_level>0.0</water_level>
       <fluid_density>1000.0</fluid_density>
-      <volume>0.0141786225</volume>
+      <volume>0.01</volume>
     </plugin>
-  </gazebo> -->
+  </gazebo>
 
   <!-- <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">

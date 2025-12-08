@@ -95,7 +95,7 @@ def _nodes(context):
 
 def generate_launch_description():
     pkg_share = get_package_share_directory(PKG)
-    default_model = os.path.join(pkg_share, "urdf", "guppy", "guppytest1.urdf")
+    default_model = os.path.join(pkg_share, "urdf", "guppyExperimental", "guppytest1Experimental.urdf")
     default_world = os.path.join(pkg_share, "worlds", "water_world.sdf")
     default_rviz  = os.path.join(pkg_share, "rviz", "view_lidar.rviz")
 

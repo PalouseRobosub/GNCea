@@ -46,7 +46,7 @@
     </model>
 
     <!-- Floating cube with buoyancy -->
-    <model name="floater_cube">
+    <!-- <model name="floater_cube">
       <pose>0 0 0.6 0 0 0</pose>
       <link name="cube_link">
         <inertial>
@@ -69,7 +69,7 @@
         <fluid_density>1000.0</fluid_density>
         <volume>1.0</volume>
       </plugin>
-    </model>
+    </model> -->
 
     <!-- Camera looking at the cube -->
     <model name="observer_camera">
