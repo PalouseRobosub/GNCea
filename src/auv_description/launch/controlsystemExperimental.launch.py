@@ -47,30 +47,30 @@ def _nodes(context):
         launch_arguments={"gz_args": f"-r -v 3 {world_path}"}.items()
     ))
 
-    # Joint state publisher (GUI optional)
-    if use_gui:
-        nodes.append(Node(
-            package="joint_state_publisher_gui",
-            executable="joint_state_publisher_gui",
-            name="joint_state_publisher_gui",
-            output="screen",
-        ))
-    else:
-        nodes.append(Node(
-            package="joint_state_publisher",
-            executable="joint_state_publisher",
-            name="joint_state_publisher",
-            output="screen",
-        ))
+    # # Joint state publisher (GUI optional)
+    # if use_gui:
+    #     nodes.append(Node(
+    #         package="joint_state_publisher_gui",
+    #         executable="joint_state_publisher_gui",
+    #         name="joint_state_publisher_gui",
+    #         output="screen",
+    #     ))
+    # else:
+    #     nodes.append(Node(
+    #         package="joint_state_publisher",
+    #         executable="joint_state_publisher",
+    #         name="joint_state_publisher",
+    #         output="screen",
+    #     ))
 
-    # Robot state publisher (feeds TF and RViz)
-    nodes.append(Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        name="robot_state_publisher",
-        output="screen",
-        parameters=[{"robot_description": urdf_txt}],
-    ))
+    # # Robot state publisher (feeds TF and RViz)
+    # nodes.append(Node(
+    #     package="robot_state_publisher",
+    #     executable="robot_state_publisher",
+    #     name="robot_state_publisher",
+    #     output="screen",
+    #     parameters=[{"robot_description": urdf_txt}],
+    # ))
 
     # Spawn the URDF into Gazebo (use the rewritten file)
     nodes.append(Node(
@@ -81,15 +81,15 @@ def _nodes(context):
         arguments=["-name", name, "-file", tmp_urdf],
     ))
 
-    # RViz2 (optional)
-    if use_rviz:
-        nodes.append(Node(
-            package="rviz2",
-            executable="rviz2",
-            name="rviz2",
-            output="screen",
-            arguments=["-d", rviz_cfg],
-        ))
+    # # RViz2 (optional)
+    # if use_rviz:
+    #     nodes.append(Node(
+    #         package="rviz2",
+    #         executable="rviz2",
+    #         name="rviz2",
+    #         output="screen",
+    #         arguments=["-d", rviz_cfg],
+    #     ))
 
     return nodes
 
