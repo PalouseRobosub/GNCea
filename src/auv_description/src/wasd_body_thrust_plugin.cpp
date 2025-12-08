@@ -2,8 +2,11 @@
 #include <string>
 #include <mutex>
 
+#include <math.h>
+
 #include <rclcpp/rclcpp.hpp>
 #include <geometry_msgs/msg/vector3.hpp>
+#include <std_msgs/msg/float32.hpp>
 
 #include <gz/plugin/Register.hh>
 #include <gz/sim/Model.hh>
@@ -61,11 +64,16 @@ public:
 
     link_name_ = temp_link;
     force_topic_  = (sdf && sdf->HasElement("force_topic"))  ? sdf->Get<std::string>("force_topic")  : "/auve1/force_body";
+    motor_speed_topic  = (sdf && sdf->HasElement("motor_speed_topic"))  ? sdf->Get<std::string>("motor_speed_topic")  : "/motor_speed";
     torque_topic_ = (sdf && sdf->HasElement("torque_topic")) ? sdf->Get<std::string>("torque_topic") : "/auve1/torque_body";
     hold_ms_ = (sdf && sdf->HasElement("hold_ms")) ? sdf->Get<int>("hold_ms") : -1;
     force_scale_  = (sdf && sdf->HasElement("force_scale"))  ? sdf->Get<double>("force_scale")  : 1.0;
     torque_scale_ = (sdf && sdf->HasElement("torque_scale")) ? sdf->Get<double>("torque_scale") : 1.0;
 
+    theta  = (sdf && sdf->HasElement("theta"))  ? sdf->Get<double>("theta")  : 0.0;
+    phi = (sdf && sdf->HasElement("phi")) ? sdf->Get<double>("phi") : 0.0;
+
+    
     if (sdf && sdf->HasElement("lever")) {
       lever_ = sdf->Get<gz::math::Vector3d>("lever");
       RCLCPP_INFO(node_->get_logger(),
@@ -76,25 +84,37 @@ public:
     // --------------------------------------------------------------------------
     // 3. Subscriptions
     // --------------------------------------------------------------------------
-    sub_force_ = node_->create_subscription<geometry_msgs::msg::Vector3>(
-      force_topic_, 10,
-      [this](geometry_msgs::msg::Vector3::SharedPtr msg)
+    sub_force_ = node_->create_subscription<std_msgs::msg::Float32>(
+      motor_speed_topic, 10,
+      [this](std_msgs::msg::Float32::SharedPtr msg)
       {
         std::lock_guard<std::mutex> lock(mtx_);
-        cmd_force_body_.Set(msg->x * force_scale_, msg->y * force_scale_, msg->z * force_scale_);
+
+        float speed = static_cast<float>(msg->data);
+
+        if (speed < 0.1) speed = 0;
+
+        double p = (90 - phi) * (M_PI / 180);
+        double t = (90 + theta) * (M_PI / 180);
+
+        double x = speed * sinf(p) * cosf(t);
+        double y = speed * sinf(p) * sinf(t);
+        double z = speed * cosf(p);
+
+        cmd_force_body_.Set(x * force_scale_, y * force_scale_, z * force_scale_);
         last_force_time_ = node_->now();
         have_force_ = true;
       });
 
-    sub_torque_ = node_->create_subscription<geometry_msgs::msg::Vector3>(
-      torque_topic_, 10,
-      [this](geometry_msgs::msg::Vector3::SharedPtr msg)
-      {
-        std::lock_guard<std::mutex> lock(mtx_);
-        cmd_torque_body_.Set(msg->x * torque_scale_, msg->y * torque_scale_, msg->z * torque_scale_);
-        last_torque_time_ = node_->now();
-        have_torque_ = true;
-      });
+    // sub_torque_ = node_->create_subscription<geometry_msgs::msg::Vector3>(
+    //   torque_topic_, 10,
+    //   [this](geometry_msgs::msg::Vector3::SharedPtr msg)
+    //   {
+    //     std::lock_guard<std::mutex> lock(mtx_);
+    //     cmd_torque_body_.Set(msg->x * torque_scale_, msg->y * torque_scale_, msg->z * torque_scale_);
+    //     last_torque_time_ = node_->now();
+    //     have_torque_ = true;
+    //   });
 
     // --------------------------------------------------------------------------
     // 4. ROS Executor Thread
@@ -184,6 +204,10 @@ public:
 
     // Apply the combined wrench on this link
     link_.AddWorldWrench(ecm, f_world, tau_world + tau_lever);
+
+    // gz::math::Vector3d vel = link_.WorldLinearVelocity();
+    // gz::math::Vector3d d = -5 * vel;
+    // RCLCPP_INFO(node_->get_logger(), "DAMPING: (%.2f,%.2f,%.2f)", d.X(), d.Y(), d.Z());
     // --------------------------------------------------------------------------
 
     // Debug (every 60 cycles)
@@ -215,16 +239,20 @@ private:
   Model model_;
   std::string link_name_;
   std::string force_topic_;
+  std::string motor_speed_topic;
   std::string torque_topic_;
   int    hold_ms_{-1};
   double force_scale_{1.0};
   double torque_scale_{1.0};
 
+  double theta{0.0};
+  double phi{0.0};
+
   Entity linkEntity_{gz::sim::kNullEntity};
   Link link_{gz::sim::kNullEntity};
 
   std::shared_ptr<rclcpp::Node> node_;
-  rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr sub_force_;
+  rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr sub_force_;
   rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr sub_torque_;
   std::shared_ptr<rclcpp::executors::SingleThreadedExecutor> exec_;
   std::thread spinner_;
