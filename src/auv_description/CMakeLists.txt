@@ -62,8 +62,15 @@ install(
 install(PROGRAMS
   scripts/wasd_teleop.py
   scripts/guppy_control_test.py
+  scripts/cmd_bridge.py
+  scripts/cmd_wasd_teleop.py
   DESTINATION lib/${PROJECT_NAME}
 )
+
+#CPP teleop script
+add_executable(cmd_wasd_teleop scripts/cmd_wasd_teleop.cpp)
+ament_target_dependencies(cmd_wasd_teleop rclcpp geometry_msgs)
+install(TARGETS cmd_wasd_teleop DESTINATION lib/${PROJECT_NAME})
 
 # --- Share description assets ---
 install(DIRECTORY urdf meshes launch worlds

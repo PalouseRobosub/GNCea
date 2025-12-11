@@ -40,5 +40,7 @@
     <build_type>ament_cmake</build_type>
     <!-- Export plugin so Gazebo Sim can find it -->
     <gz.plugin>wasd_body_thrust_plugin</gz.plugin>
+    <gz.plugin>SimpleBuoyancy</gz.plugin>
+    <gz.plugin>simple_hydrodynamics</gz.plugin>
   </export>
 </package>
