@@ -78,9 +78,7 @@ public:
     
     if (sdf && sdf->HasElement("lever")) {
       lever_ = sdf->Get<gz::math::Vector3d>("lever");
-      RCLCPP_INFO(node_->get_logger(),
-                  "Lever arm set to [%.3f, %.3f, %.3f] m",
-                  lever_.X(), lever_.Y(), lever_.Z());
+      RCLCPP_INFO(node_->get_logger(), "Lever arm set to [%.3f, %.3f, %.3f] m", lever_.X(), lever_.Y(), lever_.Z());
     }
 
     // --------------------------------------------------------------------------
@@ -177,14 +175,6 @@ public:
           auto now = rclcpp::Time(node_->now().nanoseconds(), clock_type_);
           if ((now - last_force_time_) < rclcpp::Duration::from_seconds(hold_ms_ / 1000.0))
             { use_force = true; f_body = cmd_force_body_; }
-        }
-      }
-      if (have_torque_) {
-        if (hold_ms_ < 0) { use_torque = true; tau_body = cmd_torque_body_; }
-        else {
-          auto now = rclcpp::Time(node_->now().nanoseconds(), clock_type_);
-          if ((now - last_torque_time_) < rclcpp::Duration::from_seconds(hold_ms_ / 1000.0))
-            { use_torque = true; tau_body = cmd_torque_body_; }
         }
       }
     }
