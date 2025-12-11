@@ -14,6 +14,8 @@
 #include <gz/sim/System.hh>
 #include <gz/sim/Util.hh>
 #include <gz/sim/components/Name.hh>
+#include <gz/sim/components/LinearVelocity.hh>
+#include <gz/sim/components/AngularVelocity.hh>
 #include <gz/sim/components/World.hh>
 #include <gz/sim/components/Pose.hh>
 #include <gz/math/Pose3.hh>
@@ -204,6 +206,19 @@ public:
 
     // Apply the combined wrench on this link
     link_.AddWorldWrench(ecm, f_world, tau_world + tau_lever);
+
+    auto velComp = ecm.Component<gz::sim::components::LinearVelocity>(link_.Entity());
+    auto velAComp = ecm.Component<gz::sim::components::AngularVelocity>(link_.Entity());
+    if (velComp && velAComp) {
+      const gz::math::Vector3d &vel = velComp->Data();
+      const gz::math::Vector3d &vela = velAComp->Data();
+      gz::math::Vector3d df = vel.Abs() * vel * -100;
+      gz::math::Vector3d dft = vela.Abs() * vela * -100;
+      link_.AddWorldWrench(ecm, df, dft);
+
+      RCLCPP_INFO(node_->get_logger(), "drag_force: <%.2f, %.2f, %.2f>", df.X(), df.Y(), df.Z());
+
+    }
 
     // gz::math::Vector3d vel = link_.WorldLinearVelocity();
     // gz::math::Vector3d d = -5 * vel;

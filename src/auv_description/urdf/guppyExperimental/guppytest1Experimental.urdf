@@ -296,7 +296,7 @@
       <topic>guppy/force_body</topic>
       <hold_ms>10</hold_ms>
       <scale>1.0</scale>
-      <force_scale>1.0</force_scale>
+      <force_scale>500</force_scale>
       <torque_scale>1.0</torque_scale>
     </plugin>
   </gazebo> -->
@@ -311,7 +311,7 @@
       <motor_speed_topic>/motor/m0</motor_speed_topic>
       <lever>0.27819 0.24536 -0.019075</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>1.0</force_scale>
+      <force_scale>500</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>135</theta>
       <phi>0</phi>
@@ -325,7 +325,7 @@
       <motor_speed_topic>/motor/m4</motor_speed_topic>
       <lever>0.2903 -2.5E-05 -0.013798</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>1.0</force_scale>
+      <force_scale>500</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>0</theta>
       <phi>90</phi>
@@ -339,7 +339,7 @@
       <torque_topic>/guppy/thrusters/t1C/torque</torque_topic>
       <lever>0.27819 -0.24536 -0.019025</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>1.0</force_scale>
+      <force_scale>500</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>-135</theta>
       <phi>0</phi>
@@ -353,7 +353,7 @@
       <motor_speed_topic>/motor/m5</motor_speed_topic>
       <lever>-2.5E-05 -0.2649 -0.013798</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>1.0</force_scale>
+      <force_scale>500</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>0</theta>
       <phi>90</phi>
@@ -367,7 +367,7 @@
       <motor_speed_topic>/motor/m3</motor_speed_topic>
       <lever>-0.27819 -0.24536 -0.019075</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>1.0</force_scale>
+      <force_scale>500</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>-45</theta>
       <phi>0</phi>
@@ -381,7 +381,7 @@
       <motor_speed_topic>/motor/m6</motor_speed_topic>
       <lever>-0.2903 2.5E-05 -0.013798</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>1.0</force_scale>
+      <force_scale>500</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>0</theta>
       <phi>90</phi>
@@ -395,7 +395,7 @@
       <motor_speed_topic>/motor/m3</motor_speed_topic>
       <lever>-0.27819 0.24536 -0.019075</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>1.0</force_scale>
+      <force_scale>500</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>45</theta>
       <phi>0</phi>
@@ -409,7 +409,7 @@
       <motor_speed_topic>/motor/m7</motor_speed_topic>
       <lever>2.5E-05 0.2649 -0.013798</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>1.0</force_scale>
+      <force_scale>500</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>0</theta>
       <phi>90</phi>
