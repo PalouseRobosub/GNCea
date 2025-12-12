@@ -146,6 +146,8 @@ public:
 
     auto pose = gz::sim::worldPose(linkEntity_, ecm);
     gz::math::Vector3d f_world = pose.Rot().RotateVector(f_body);
+    gz::math::Vector3d tau_world = gz::math::Vector3d::Zero;
+
     gz::math::Vector3d r_world = pose.Rot().RotateVector(lever_);
     gz::math::Vector3d tau_lever = r_world.Cross(f_world);
 
@@ -156,6 +158,7 @@ public:
 
     auto velComp = ecm.Component<gz::sim::components::LinearVelocity>(link_.Entity());
     auto velAComp = ecm.Component<gz::sim::components::AngularVelocity>(link_.Entity());
+      RCLCPP_INFO(node_->get_logger(), "is_okay: %i, %i", velComp && 1, velAComp && 1);
     if (velComp && velAComp) {
       const gz::math::Vector3d &vel = velComp->Data();
       const gz::math::Vector3d &vela = velAComp->Data();
