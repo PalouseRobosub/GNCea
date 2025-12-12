@@ -88,16 +88,16 @@ public:
 
         float speed = static_cast<float>(msg->data);
 
-        if (abs(speed) < 0.01) speed = 0;
+        if (abs(speed) < 0.1) speed = 0;
 
         double p = (90 - phi) * (M_PI / 180);
-        double t = (90 + theta) * (M_PI / 180);
+        double t = (270 + theta) * (M_PI / 180);
 
         double y = speed * sinf(p) * cosf(t);
         double x = speed * sinf(p) * sinf(t);
         double z = speed * cosf(p);
 
-        RCLCPP_INFO(node_->get_logger(), "%s speed: <%.2f, %.2f, %.2f>", motor_speed_topic.c_str(), x, y, z);
+        // RCLCPP_INFO(node_->get_logger(), "%s speed: <%.2f, %.2f, %.2f>", motor_speed_topic.c_str(), x, y, z);
 
         cmd_force_body_.Set(x * force_scale_, y * force_scale_, z * force_scale_);
         last_force_time_ = node_->now();
@@ -141,6 +141,11 @@ public:
         "Resolved link '%s' (entity %lu).", link_name_.c_str(), linkEntity_);
     }
 
+    if (!velocity_enabled_)
+    {
+      link_.EnableVelocityChecks(ecm, true);
+      velocity_enabled_ = true;
+    }
 
     gz::math::Vector3d f_body = cmd_force_body_; 
 
@@ -158,15 +163,14 @@ public:
 
     auto velComp = ecm.Component<gz::sim::components::LinearVelocity>(link_.Entity());
     auto velAComp = ecm.Component<gz::sim::components::AngularVelocity>(link_.Entity());
-      RCLCPP_INFO(node_->get_logger(), "is_okay: %i, %i", velComp && 1, velAComp && 1);
     if (velComp && velAComp) {
       const gz::math::Vector3d &vel = velComp->Data();
       const gz::math::Vector3d &vela = velAComp->Data();
-      gz::math::Vector3d df = vel.Abs() * vel * -100000;
-      gz::math::Vector3d dft = vela.Abs() * vela * -100000;
+      gz::math::Vector3d df = vel.Abs() * vel * -10;
+      gz::math::Vector3d dft = vela.Abs() * vela * -0.1;
       link_.AddWorldWrench(ecm, df, dft);
 
-      RCLCPP_INFO(node_->get_logger(), "drag_force: <%.2f, %.2f, %.2f>\tdrag_angular: <%.2f, %.2f, %.2f>", df.X(), df.Y(), df.Z(), dft.X(), dft.Y(), dft.Z());
+      RCLCPP_INFO(node_->get_logger(), "drag_force: <%.2f, %.2f, %.2f>", df.X(), df.Y(), df.Z());
 
     }
   }

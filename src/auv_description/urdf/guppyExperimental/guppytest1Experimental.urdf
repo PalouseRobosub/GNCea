@@ -5,33 +5,33 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="guppytest1">
 
   <gazebo>
-  <disableFixedJointLumping>true</disableFixedJointLumping>
-  <preserveFixedJoint>true</preserveFixedJoint>
+  <!-- <disableFixedJointLumping>true</disableFixedJointLumping> -->
+  <!-- <preserveFixedJoint>true</preserveFixedJoint> -->
   </gazebo>
 
   <!-- Global material: opaque red -->
   <material name="opaque_red">
-    <color rgba="1 0 0 0.6"/>
+    <color rgba="1 0 0 0.9"/>
   </material>
     <material name="blue">
-    <color rgba="0 0 1 0.5"/>
+    <color rgba="0 1 1 1"/>
   </material>
 
   <link name="base_link">
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 -1.5708"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="12.294"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 -1.5708"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <mesh filename="package://auv_description/meshes/base_link.STL"/>
       </geometry>
       <material name="blue"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 -1.5708"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <mesh filename="package://auv_description/meshes/base_link.STL"/>
       </geometry>
@@ -282,23 +282,23 @@
   </joint>
   
 
-  <gazebo>
+  <!-- <gazebo>
     <plugin filename="libsimple_buoyancy.so" name="gz::sim::systems::SimpleBuoyancy">
       <link_name>base_link</link_name>
       <water_level>0.0</water_level>
       <fluid_density>1000.0</fluid_density>
-      <volume>0.01</volume>
+      <volume>0.1</volume>
     </plugin>
-  </gazebo>
+  </gazebo> -->
 
   <!-- <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
       <topic>guppy/force_body</topic>
-      <hold_ms>10</hold_ms>
+      
       <scale>1.0</scale>
       <force_scale>50</force_scale>
-      <torque_scale>1.0</torque_scale>
+      
     </plugin>
   </gazebo> -->
 
@@ -307,13 +307,13 @@
   <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t0C/force</force_topic>
-      <torque_topic>/guppy/thrusters/t0C/torque</torque_topic>
+      
+      
       <motor_speed_topic>/motor/m0</motor_speed_topic>
       <lever>-1 1 0</lever>
-      <hold_ms>10</hold_ms>
+      
       <force_scale>50</force_scale>
-      <torque_scale>1.0</torque_scale>
+      
       <theta>-45</theta>
       <phi>0</phi>
     </plugin>
@@ -321,13 +321,13 @@
   <!-- THRUSTER OFFSET: "0.2903 -2.5E-05 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t0M/force</force_topic>
-      <torque_topic>/guppy/thrusters/t0M/torque</torque_topic>
+      
+      
       <motor_speed_topic>/motor/m4</motor_speed_topic>
       <lever>0 1 0</lever>
-      <hold_ms>10</hold_ms>
+      
       <force_scale>50</force_scale>
-      <torque_scale>1.0</torque_scale>
+      
       <theta>0</theta>
       <phi>90</phi>
     </plugin>
@@ -335,13 +335,13 @@
   <!-- THRUSTER OFFSET: "0.27819 -0.24536 -0.019025" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t1C/force</force_topic>
+      
       <motor_speed_topic>/motor/m1</motor_speed_topic>
-      <torque_topic>/guppy/thrusters/t1C/torque</torque_topic>
+      
       <lever>1 1 0</lever>
-      <hold_ms>10</hold_ms>
+      
       <force_scale>50</force_scale>
-      <torque_scale>1.0</torque_scale>
+      
       <theta>-135</theta>
       <phi>0</phi>
     </plugin>
@@ -349,13 +349,13 @@
   <!-- THRUSTER OFFSET: "-2.5E-05 -0.2649 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t1M/force</force_topic>
-      <torque_topic>/guppy/thrusters/t1M/torque</torque_topic>
+      
+      
       <motor_speed_topic>/motor/m5</motor_speed_topic>
       <lever>1 0 0</lever>
-      <hold_ms>10</hold_ms>
+      
       <force_scale>50</force_scale>
-      <torque_scale>1.0</torque_scale>
+      
       <theta>0</theta>
       <phi>90</phi>
     </plugin>
@@ -363,13 +363,13 @@
   <!-- THRUSTER OFFSET: "-0.27819 -0.24536 -0.019075" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t2C/force</force_topic>
-      <torque_topic>/guppy/thrusters/t2C/torque</torque_topic>
+      
+      
       <motor_speed_topic>/motor/m2</motor_speed_topic>
       <lever>1 -1 0</lever>
-      <hold_ms>10</hold_ms>
+      
       <force_scale>50</force_scale>
-      <torque_scale>1.0</torque_scale>
+      
       <theta>135</theta>
       <phi>0</phi>
     </plugin>
@@ -377,13 +377,13 @@
   <!-- THRUSTER OFFSET: "-0.2903 2.5E-05 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t2M/force</force_topic>
-      <torque_topic>/guppy/thrusters/t2M/torque</torque_topic>
+      
+      
       <motor_speed_topic>/motor/m6</motor_speed_topic>
       <lever>0 -1 0</lever>
-      <hold_ms>10</hold_ms>
+      
       <force_scale>50</force_scale>
-      <torque_scale>1.0</torque_scale>
+      
       <theta>0</theta>
       <phi>90</phi>
     </plugin>
@@ -391,13 +391,13 @@
   <!-- THRUSTER OFFSET: "-0.27819 0.24536 -0.019075" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t3C/force</force_topic>
-      <torque_topic>/guppy/thrusters/t3C/torque</torque_topic>
+      
+      
       <motor_speed_topic>/motor/m3</motor_speed_topic>
       <lever>-1 -1 0</lever>
-      <hold_ms>10</hold_ms>
+      
       <force_scale>50</force_scale>
-      <torque_scale>1.0</torque_scale>
+      
       <theta>45</theta>
       <phi>0</phi>
     </plugin>
@@ -405,13 +405,13 @@
   <!-- THRUSTER OFFSET: "2.5E-05 0.2649 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t3M/force</force_topic>
-      <torque_topic>/guppy/thrusters/t3M/torque</torque_topic>
+      
+      
       <motor_speed_topic>/motor/m7</motor_speed_topic>
       <lever>-1 0 0</lever>
-      <hold_ms>10</hold_ms>
+      
       <force_scale>50</force_scale>
-      <torque_scale>1.0</torque_scale>
+      
       <theta>0</theta>
       <phi>90</phi>
     </plugin>
