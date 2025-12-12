@@ -146,8 +146,13 @@ public:
 
     auto pose = gz::sim::worldPose(linkEntity_, ecm);
     gz::math::Vector3d f_world = pose.Rot().RotateVector(f_body);
+    gz::math::Vector3d r_world = pose.Rot().RotateVector(lever_);
+    gz::math::Vector3d tau_lever = r_world.Cross(f_world);
 
-    link_.AddWorldForce(ecm, f_world);
+    // Apply the combined wrench on this link
+    link_.AddWorldWrench(ecm, f_world, tau_world + tau_lever);
+
+    // link_.AddWorldForce(ecm, f_world);
 
     auto velComp = ecm.Component<gz::sim::components::LinearVelocity>(link_.Entity());
     auto velAComp = ecm.Component<gz::sim::components::AngularVelocity>(link_.Entity());
