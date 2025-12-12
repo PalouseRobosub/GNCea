@@ -48,29 +48,29 @@ def _nodes(context):
     ))
 
     # Joint state publisher (GUI optional)
-    if use_gui:
-        nodes.append(Node(
-            package="joint_state_publisher_gui",
-            executable="joint_state_publisher_gui",
-            name="joint_state_publisher_gui",
-            output="screen",
-        ))
-    else:
-        nodes.append(Node(
-            package="joint_state_publisher",
-            executable="joint_state_publisher",
-            name="joint_state_publisher",
-            output="screen",
-        ))
+    # if use_gui:
+    #     nodes.append(Node(
+    #         package="joint_state_publisher_gui",
+    #         executable="joint_state_publisher_gui",
+    #         name="joint_state_publisher_gui",
+    #         output="screen",
+    #     ))
+    # else:
+    #     nodes.append(Node(
+    #         package="joint_state_publisher",
+    #         executable="joint_state_publisher",
+    #         name="joint_state_publisher",
+    #         output="screen",
+    #     ))
 
-    # Robot state publisher (feeds TF and RViz)
-    nodes.append(Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        name="robot_state_publisher",
-        output="screen",
-        parameters=[{"robot_description": urdf_txt}],
-    ))
+    # # Robot state publisher (feeds TF and RViz)
+    # nodes.append(Node(
+    #     package="robot_state_publisher",
+    #     executable="robot_state_publisher",
+    #     name="robot_state_publisher",
+    #     output="screen",
+    #     parameters=[{"robot_description": urdf_txt}],
+    # ))
 
     # Spawn the URDF into Gazebo (use the rewritten file)
     nodes.append(Node(
@@ -82,14 +82,14 @@ def _nodes(context):
     ))
 
     # RViz2 (optional)
-    if use_rviz:
-        nodes.append(Node(
-            package="rviz2",
-            executable="rviz2",
-            name="rviz2",
-            output="screen",
-            arguments=["-d", rviz_cfg],
-        ))
+    # if use_rviz:
+    #     nodes.append(Node(
+    #         package="rviz2",
+    #         executable="rviz2",
+    #         name="rviz2",
+    #         output="screen",
+    #         arguments=["-d", rviz_cfg],
+    #     ))
 
     return nodes
 

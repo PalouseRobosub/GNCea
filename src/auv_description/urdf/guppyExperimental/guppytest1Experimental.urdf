@@ -6,6 +6,7 @@
 
   <gazebo>
   <disableFixedJointLumping>true</disableFixedJointLumping>
+  <preserveFixedJoint>true</preserveFixedJoint>
   </gazebo>
 
   <!-- Global material: opaque red -->
@@ -18,7 +19,7 @@
 
   <link name="base_link">
     <inertial>
-      <origin xyz="5.0383E-06 0.042158 0.00054643" rpy="0 0 -1.5708"/>
+      <origin xyz="0 0 0" rpy="0 0 -1.5708"/>
       <mass value="12.294"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
@@ -39,7 +40,7 @@
 
   <link name="thruster0C_link">
     <inertial>
-      <origin xyz="-0.006048 6.5742E-06 -0.00061572" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.17277"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
@@ -66,7 +67,7 @@
 
   <link name="thruster0M_link">
     <inertial>
-      <origin xyz="-0.0060486 6.6279E-06 -0.0006157" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.17279"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
@@ -93,7 +94,7 @@
 
   <link name="thruster1C_link">
     <inertial>
-      <origin xyz="-0.006048 6.5742E-06 -0.00061572" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.17277"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
@@ -120,7 +121,7 @@
 
   <link name="thruster1M_link">
     <inertial>
-      <origin xyz="-0.0060486 6.628E-06 -0.0006157" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.17279"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
@@ -147,7 +148,7 @@
 
   <link name="thruster2C_link">
     <inertial>
-      <origin xyz="-0.006048 6.6362E-06 -0.00061575" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.17277"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
@@ -174,7 +175,7 @@
 
   <link name="thruster2M_link">
     <inertial>
-      <origin xyz="-0.0060486 6.628E-06 -0.0006157" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.17279"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
@@ -201,7 +202,7 @@
 
   <link name="thruster3C_link">
     <inertial>
-      <origin xyz="-0.006048 6.5742E-06 -0.00061572" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.17277"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
@@ -277,7 +278,7 @@
   <joint name="imu_joint" type="fixed">
     <parent link="base_link"/>
     <child link="imu_link"/>
-    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
   
 
@@ -296,7 +297,7 @@
       <topic>guppy/force_body</topic>
       <hold_ms>10</hold_ms>
       <scale>1.0</scale>
-      <force_scale>500</force_scale>
+      <force_scale>50</force_scale>
       <torque_scale>1.0</torque_scale>
     </plugin>
   </gazebo> -->
@@ -311,9 +312,9 @@
       <motor_speed_topic>/motor/m0</motor_speed_topic>
       <lever>-1 1 0</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>500</force_scale>
+      <force_scale>50</force_scale>
       <torque_scale>1.0</torque_scale>
-      <theta>135</theta>
+      <theta>-45</theta>
       <phi>0</phi>
     </plugin>
 
@@ -325,7 +326,7 @@
       <motor_speed_topic>/motor/m4</motor_speed_topic>
       <lever>0 1 0</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>500</force_scale>
+      <force_scale>50</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>0</theta>
       <phi>90</phi>
@@ -339,7 +340,7 @@
       <torque_topic>/guppy/thrusters/t1C/torque</torque_topic>
       <lever>1 1 0</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>500</force_scale>
+      <force_scale>50</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>-135</theta>
       <phi>0</phi>
@@ -353,7 +354,7 @@
       <motor_speed_topic>/motor/m5</motor_speed_topic>
       <lever>1 0 0</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>500</force_scale>
+      <force_scale>50</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>0</theta>
       <phi>90</phi>
@@ -364,12 +365,12 @@
       <link_name>base_link</link_name>
       <force_topic>/guppy/thrusters/t2C/force</force_topic>
       <torque_topic>/guppy/thrusters/t2C/torque</torque_topic>
-      <motor_speed_topic>/motor/m3</motor_speed_topic>
+      <motor_speed_topic>/motor/m2</motor_speed_topic>
       <lever>1 -1 0</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>500</force_scale>
+      <force_scale>50</force_scale>
       <torque_scale>1.0</torque_scale>
-      <theta>-45</theta>
+      <theta>135</theta>
       <phi>0</phi>
     </plugin>
 
@@ -381,7 +382,7 @@
       <motor_speed_topic>/motor/m6</motor_speed_topic>
       <lever>0 -1 0</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>500</force_scale>
+      <force_scale>50</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>0</theta>
       <phi>90</phi>
@@ -395,7 +396,7 @@
       <motor_speed_topic>/motor/m3</motor_speed_topic>
       <lever>-1 -1 0</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>500</force_scale>
+      <force_scale>50</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>45</theta>
       <phi>0</phi>
@@ -409,7 +410,7 @@
       <motor_speed_topic>/motor/m7</motor_speed_topic>
       <lever>-1 0 0</lever>
       <hold_ms>10</hold_ms>
-      <force_scale>500</force_scale>
+      <force_scale>50</force_scale>
       <torque_scale>1.0</torque_scale>
       <theta>0</theta>
       <phi>90</phi>
