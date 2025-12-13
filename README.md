@@ -98,6 +98,12 @@ Rviz will open up automatically, set fixed frame to auv/cube_link/lidar_link_sen
 
 Teleoperate using previous commands. 
 
+To fire torpedos
+
+```
+ros2 topic pub /shoot_torpedo std_msgs/msg/Bool "data: true"
+```
+
 # GUPPY, AUV for 2026 robosub competition
 
 To launch guppy:

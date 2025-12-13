@@ -28,7 +28,7 @@
     </gazebo>
   </xacro:macro>
 
-  <xacro:macro name="hydrodynamics_plugin" params="fluid_density">
+  <xacro:macro name="hydrodynamics_plugin" params="link_name fluid_density">
     <gazebo>
       <plugin name="simple_hydrodynamics" filename="libsimple_hydrodynamics.so">
         <link_name>${link_name}</link_name>
@@ -47,6 +47,18 @@
       </plugin>
     </gazebo>
         
+  </xacro:macro>
+
+  <xacro:macro name="torpedo_plugin" params="link_name">
+    <gazebo>
+    <plugin name="auv_sim::TorpedoShooterPlugin" filename="libtorpedo_shooter.so">
+    <torpedo_sdf_path>$(find auv_description)/urdf/torpedo/torpedo1.sdf</torpedo_sdf_path>
+    <launcher_link>${link_name}</launcher_link>
+    <shoot_force>20</shoot_force>
+    <shoot_duration>0.1</shoot_duration>
+    <initial_velocity>3.0</initial_velocity>
+    </plugin>
+    </gazebo>
   </xacro:macro>
 
   

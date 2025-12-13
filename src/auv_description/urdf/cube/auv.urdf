@@ -61,6 +61,20 @@
   link_name="lidar_link"
   topic="/lidar/points"/>
 
+  <!-- TORPEDO pointing +X -->
+  <xacro:torpedo_plugin
+    link_name="cube_link"
+  />
+
+  <!-- SIMPLE HYDRODYNAMICS -->
+  <xacro:hydrodynamics_plugin
+  link_name="${buoyancy_link}"
+  fluid_density="${buoyancy_fluid_density}"/>
+
+
+
+
+
   <!-- Plugins (buoyancy + WASD) -->
   <xacro:buoyancy_plugin
     link_name="${buoyancy_link}"

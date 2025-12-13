@@ -16,6 +16,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(gz-sim8 REQUIRED)
 find_package(gz-plugin2 REQUIRED)
 find_package(gz-math7 REQUIRED)
+find_package(gz-plugin2 REQUIRED)
 
 # --- Plugin: WASD body thrust ---
 add_library(wasd_body_thrust_plugin SHARED
@@ -31,6 +32,23 @@ ament_target_dependencies(wasd_body_thrust_plugin
 
 install(TARGETS wasd_body_thrust_plugin
   EXPORT wasd_body_thrust_pluginTargets
+  LIBRARY DESTINATION lib
+)
+
+# --- Plugin: torpedo shooter ---
+add_library(torpedo_shooter SHARED src/gazebo_ros_torpedo_shooter.cpp)
+
+ament_target_dependencies(torpedo_shooter
+  rclcpp
+  std_msgs
+  gz-sim8
+  gz-plugin2
+  gz-common5
+)
+
+
+install(TARGETS torpedo_shooter
+  EXPORT torpedo_shooterTargets
   LIBRARY DESTINATION lib
 )
 

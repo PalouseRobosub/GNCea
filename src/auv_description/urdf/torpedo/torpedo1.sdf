@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="torpedo_projectile">
+    <static>false</static>
+    <link name="body">
+      <pose>0 0 0 0 0 0</pose>
+      
+      <inertial>
+        <mass>1.0</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <iyy>0.01</iyy>
+          <izz>0.002</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      
+      <!-- Main body (cylinder along X-axis) -->
+      <visual name="body_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>0.3</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>1.0 0.2 0.2 1.0</ambient>
+          <diffuse>1.0 0.2 0.2 1.0</diffuse>
+          <specular>0.5 0.5 0.5 1.0</specular>
+        </material>
+        <!-- Rotate to align along X-axis (cylinder default is Z-axis) -->
+        <pose>0 0 0 0 1.5708 0</pose>
+      </visual>
+      
+      <!-- Nose cone -->
+      <visual name="nose_visual">
+        <geometry>
+          <sphere>
+            <radius>0.05</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>0.8 0.1 0.1 1.0</ambient>
+          <diffuse>0.8 0.1 0.1 1.0</diffuse>
+          <specular>0.5 0.5 0.5 1.0</specular>
+        </material>
+        <pose>0.15 0 0 0 0 0</pose>
+      </visual>
+      
+      <!-- Simple sphere collision to avoid ODE issues -->
+      <collision name="collision">
+        <geometry>
+          <sphere>
+            <radius>0.08</radius>
+          </sphere>
+        </geometry>
+      </collision>
+      
+    </link>
+    
+    <!-- Buoyancy plugin for neutral buoyancy -->
+    <plugin filename="libsimple_buoyancy.so" name="gz::sim::systems::SimpleBuoyancy">
+      <link_name>body</link_name>
+      <water_level>0.0</water_level>
+      <fluid_density>1000.0</fluid_density>
+      <!-- Volume = mass/density for neutral buoyancy
+           mass = 1.0 kg, so volume = 1.0/1000.0 = 0.001 m^3 -->
+      <volume>0.001</volume>
+    </plugin>
+    
+  </model>
+</sdf>
