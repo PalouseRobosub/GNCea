@@ -167,10 +167,14 @@ public:
       const gz::math::Vector3d &vel = velComp->Data();
       const gz::math::Vector3d &vela = velAComp->Data();
       gz::math::Vector3d df = vel.Abs() * vel * -10;
-      gz::math::Vector3d dft = vela.Abs() * vela * -0.1;
+      if (df.X() > 100000 || df.Y() > 100000 || df.Z() > 100000) {
+        df = gz::math::Vector3d::Zero;
+      }
+      gz::math::Vector3d dft = vela.Abs() * vela * -1;
       link_.AddWorldWrench(ecm, df, dft);
 
       RCLCPP_INFO(node_->get_logger(), "drag_force: <%.2f, %.2f, %.2f>", df.X(), df.Y(), df.Z());
+      RCLCPP_INFO(node_->get_logger(), "drag_force_t: <%.2f, %.2f, %.2f>", dft.X(), dft.Y(), dft.Z());
 
     }
   }
