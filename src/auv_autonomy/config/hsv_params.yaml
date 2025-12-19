@@ -1,0 +1,7 @@
+hsv_params:
+  red_lower1: [0, 100, 100]
+  red_upper1: [10, 255, 255]
+  red_lower2: [160, 100, 100]
+  red_upper2: [180, 255, 255]
+  white_lower: [0, 0, 200]
+  white_upper: [180, 30, 255]
