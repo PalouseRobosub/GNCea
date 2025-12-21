@@ -35,13 +35,11 @@ add_executable(lane_navigator_cpp scripts/lane_navigator_cpp.cpp)
 ament_target_dependencies(lane_navigator_cpp
   rclcpp sensor_msgs geometry_msgs ros_gz_interfaces cv_bridge
 )
-target_link_libraries(lane_navigator_cpp ${OpenCV_LIBS})
+target_link_libraries(lane_navigator_cpp ${OpenCV_LIBRARIES})
 install(TARGETS lane_navigator_cpp DESTINATION lib/${PROJECT_NAME})
 
 
 install(PROGRAMS
-  scripts/gate_navigator_node.py
-  scripts/test_hsv_tuning.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -52,7 +50,6 @@ install(DIRECTORY
 )
 
 install(PROGRAMS
-  scripts/gate_navigator_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

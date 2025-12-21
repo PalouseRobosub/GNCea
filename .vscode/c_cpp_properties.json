@@ -7,6 +7,8 @@
         "${workspaceFolder}/install/**",
         "${workspaceFolder}/src/**",
         "/usr/include/gz/**",
+        "/usr/include/opencv4",
+        "/usr/include/opencv4/opencv2",
         "/usr/include/**"
       ],
       "compilerPath": "/usr/bin/cc",

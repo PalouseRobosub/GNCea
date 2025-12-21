@@ -18,6 +18,7 @@
   <depend>ros_gz_interfaces</depend>
   <depend>cv_bridge</depend>
   <depend>opencv</depend>
+  <depend>image_transport</depend>
   
 
   <export>

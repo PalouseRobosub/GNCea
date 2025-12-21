@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<robot name="cube_module" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Box inertia helper (I = 1/12 m (y^2+z^2), etc.) -->
+  <xacro:macro name="cube_base" params="name size_x size_y size_z mass">
+    <xacro:property name="ixx" value="${(1.0/12.0) * mass * (pow(size_y,2) + pow(size_z,2))}"/>
+    <xacro:property name="iyy" value="${(1.0/12.0) * mass * (pow(size_x,2) + pow(size_z,2))}"/>
+    <xacro:property name="izz" value="${(1.0/12.0) * mass * (pow(size_x,2) + pow(size_y,2))}"/>
+
+    <link name="${name}">
+      <visual>
+        <geometry><box size="${size_x} ${size_y} ${size_z}"/></geometry>
+        <material name="blue"><color rgba="0 0 1 1"/></material>
+      </visual>
+      <collision>
+        <geometry><box size="${size_x} ${size_y} ${size_z}"/></geometry>
+      </collision>
+      <inertial>
+        <mass value="${mass}"/>
+        <inertia ixx="${ixx}" iyy="${iyy}" izz="${izz}" ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+</robot>

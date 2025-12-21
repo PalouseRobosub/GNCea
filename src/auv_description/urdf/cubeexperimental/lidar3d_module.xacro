@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<robot name="lidar3d_module" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- 3D LiDAR (gpu_lidar) producing a point cloud.
+       Defaults match the tutorial's 3D lidar (VLP-32-like) vertical span.
+       Bridge with:
+         /scan/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked
+  -->
+  <xacro:macro name="lidar3d_module"
+               params="parent link_name
+                       mount_xyz:='0.55 0 0.2' mount_rpy:='0 0 0'
+                       radius:='0.05' length:='0.10' mass:='0.25'
+                       topic:='/lidar/points' update_rate:='10'
+                       range_min:='0.2' range_max:='50.0'
+                       h_samples:='1024' h_min:='-3.14159' h_max:='3.14159'
+                       v_samples:='32'   v_min:='-0.5353'  v_max:='0.1862'">
+
+    <!-- Body -->
+    <link name="${link_name}">
+      <visual>
+        <geometry><cylinder radius="${radius}" length="${length}"/></geometry>
+        <material name="darkgray"><color rgba="0.3 0.3 0.3 1"/></material>
+      </visual>
+      <collision>
+        <geometry><cylinder radius="${radius}" length="${length}"/></geometry>
+      </collision>
+      <inertial>
+        <mass value="${mass}"/>
+        <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${link_name}_mount" type="fixed">
+      <parent link="${parent}"/>
+      <child  link="${link_name}"/>
+      <origin xyz="${mount_xyz}" rpy="${mount_rpy}"/>
+    </joint>
+
+    <!-- Gazebo Harmonic 3D LiDAR -->
+    <gazebo reference="${link_name}">
+      <sensor name="${link_name}_sensor" type="gpu_lidar">
+        <always_on>true</always_on>
+        <update_rate>${update_rate}</update_rate>
+        <visualize>true</visualize>
+
+        <lidar>
+          <scan>
+            <horizontal>
+              <samples>${h_samples}</samples>
+              <min_angle>${h_min}</min_angle>
+              <max_angle>${h_max}</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>${v_samples}</samples>
+              <min_angle>${v_min}</min_angle>
+              <max_angle>${v_max}</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>${range_min}</min>
+            <max>${range_max}</max>
+            <resolution>0.01</resolution>
+          </range>
+        </lidar>
+
+        <!-- Gazebo Transport point cloud topic (per tutorial: /scan/points) -->
+        <topic>${topic}</topic>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+</robot>

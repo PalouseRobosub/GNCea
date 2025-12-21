@@ -6,7 +6,8 @@
 #include <sensor_msgs/msg/image.hpp>
 #include <sensor_msgs/msg/imu.hpp>
 #include <ros_gz_interfaces/msg/altimeter.hpp>
-
+//THESE DEPENDENCIES WILL PROBABLY CAUSE AN ERROR, IGNORE THEM AS COLCON WILL COMPILE THEM ANYWAYS.
+//THIS IS AN INTELLISENSE PROBLEM IDK HOW TO FIX IT
 #include <cv_bridge/cv_bridge.hpp>
 #include <opencv2/opencv.hpp>
 
@@ -15,6 +16,9 @@
 #include <algorithm>
 #include <vector>
 #include <string>
+
+using namespace std;
+using namespace cv;
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -52,14 +56,12 @@ class LaneNavigator : public rclcpp::Node
 public:
   LaneNavigator() : Node("lane_navigator_cpp")
   {
-    // ---------------- PARAMETERS ----------------
     this->declare_parameter<bool>("enable_debug", true);
     this->declare_parameter<bool>("show_cv_windows", false);   // imshow
     this->declare_parameter<bool>("publish_debug_images", true);
 
     this->declare_parameter<int>("debug_show_every_n_frames", 2);
 
-    // depth
     this->declare_parameter<double>("target_depth", 1.0);
     this->declare_parameter<bool>("depth_increases_down", true);
     this->declare_parameter<double>("kp_depth", 4.0);
@@ -67,14 +69,12 @@ public:
     this->declare_parameter<double>("kd_depth", 0.5);
     this->declare_parameter<double>("max_heave_cmd", 2.0);
 
-    // roll/pitch stabilize
     this->declare_parameter<double>("kp_roll", 3.0);
     this->declare_parameter<double>("kd_roll", 0.8);
     this->declare_parameter<double>("kp_pitch", 3.0);
     this->declare_parameter<double>("kd_pitch", 0.8);
     this->declare_parameter<double>("max_att_cmd", 2.0);
 
-    // yaw / lane follow
     this->declare_parameter<double>("kp_yaw_px", 0.006);
     this->declare_parameter<double>("kd_yaw", 0.05);
     this->declare_parameter<double>("k_lane_theta", 0.6);
@@ -83,11 +83,9 @@ public:
     this->declare_parameter<double>("lane_lookahead_frac", 0.65);
     this->declare_parameter<double>("lane_found_timeout", 0.5);
 
-    // forward
     this->declare_parameter<double>("forward_speed", 0.35);
     this->declare_parameter<double>("forward_speed_search", 0.05);
 
-    // HSV
     this->declare_parameter<std::vector<long>>("hsv_red1_low",  {0,   100, 100});
     this->declare_parameter<std::vector<long>>("hsv_red1_high", {10,  255, 255});
     this->declare_parameter<std::vector<long>>("hsv_red2_low",  {170, 100, 100});
@@ -95,14 +93,12 @@ public:
     this->declare_parameter<std::vector<long>>("hsv_white_low",  {0,   0,   55});
     this->declare_parameter<std::vector<long>>("hsv_white_high", {179, 45, 255});
 
-    // contour / filtering
     this->declare_parameter<int>("min_contour_area", 300);
     this->declare_parameter<double>("min_aspect", 2.0);
     this->declare_parameter<int>("blur_ksize", 5);
     this->declare_parameter<int>("morph_ksize", 5);
     this->declare_parameter<int>("max_poles_each_color", 6);
 
-    // ---------------- READ PARAMS ----------------
     debug_ = this->get_parameter("enable_debug").as_bool();
     show_cv_ = this->get_parameter("show_cv_windows").as_bool();
     publish_debug_ = this->get_parameter("publish_debug_images").as_bool();
@@ -148,17 +144,18 @@ public:
     white_low_  = vec_to_scalar(this->get_parameter("hsv_white_low").as_integer_array());
     white_high_ = vec_to_scalar(this->get_parameter("hsv_white_high").as_integer_array());
 
-    // ---------------- ROS I/O ----------------
     cmd_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
 
+    auto sensor_qos = rclcpp::SensorDataQoS();  
+
     image_sub_ = this->create_subscription<sensor_msgs::msg::Image>(
-      "/cube/image_raw", 10, std::bind(&LaneNavigator::image_cb, this, _1));
+      "/cube/image_raw", sensor_qos, std::bind(&LaneNavigator::image_cb, this, _1));
 
     alt_sub_ = this->create_subscription<ros_gz_interfaces::msg::Altimeter>(
-      "/altimeter", 10, std::bind(&LaneNavigator::alt_cb, this, _1));
+      "/altimeter", sensor_qos, std::bind(&LaneNavigator::alt_cb, this, _1));
 
     imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(
-      "/imu", 10, std::bind(&LaneNavigator::imu_cb, this, _1));
+      "/imu", sensor_qos, std::bind(&LaneNavigator::imu_cb, this, _1));
 
     if (publish_debug_) {
       dbg_rgb_pub_ = this->create_publisher<sensor_msgs::msg::Image>("/lane_debug/rgb", 1);
@@ -167,7 +164,6 @@ public:
       dbg_overlay_pub_ = this->create_publisher<sensor_msgs::msg::Image>("/lane_debug/overlay", 1);
     }
 
-    // 100 Hz control loop
     last_lane_seen_time_ = this->now();
     prev_time_ = this->now();
     timer_ = this->create_wall_timer(10ms, std::bind(&LaneNavigator::control_loop, this));
@@ -187,7 +183,6 @@ public:
   }
 
 private:
-  // HSV helper
   static cv::Scalar vec_to_scalar(const std::vector<long> &v)
   {
     if (v.size() != 3) return cv::Scalar(0, 0, 0);
@@ -261,7 +256,6 @@ private:
       poles.push_back(p);
     }
 
-    // prefer lower (closer in image) and bigger
     std::sort(poles.begin(), poles.end(), [](const Pole &a, const Pole &b) {
       if (a.cy != b.cy) return a.cy > b.cy;
       return a.area > b.area;
@@ -273,8 +267,6 @@ private:
     return poles;
   }
 
-  // Pick a "best pair" (red, white) that are at similar image height and satisfy red-left-of-white.
-  // Returns true if a pair is found.
   bool pick_best_pair(const std::vector<Pole> &reds,
                       const std::vector<Pole> &whites,
                       Pole &best_r,
@@ -282,7 +274,6 @@ private:
   {
     if (reds.empty() || whites.empty()) return false;
 
-    // only search among the top few (already sorted by closeness+area)
     const int NR = std::min<int>(3, static_cast<int>(reds.size()));
     const int NW = std::min<int>(3, static_cast<int>(whites.size()));
 
@@ -294,12 +285,10 @@ private:
         const auto &r = reds[i];
         const auto &w = whites[j];
 
-        // enforce red on left
         if (r.cx >= w.cx) continue;
 
-        // score: prefer similar cy, then prefer larger combined area
         const double dy = std::abs(r.cy - w.cy);
-        const double area_bonus = 0.0005 * (r.area + w.area); // tiny tie-break
+        const double area_bonus = 0.0005 * (r.area + w.area);
         const double score = dy - area_bonus;
 
         if (score < best_score) {
@@ -361,40 +350,33 @@ private:
     red_mask_out = red_mask;
     white_mask_out = white_mask;
 
-    // ---------------- NEW: DOT BETWEEN RED + WHITE POLES ----------------
     Pole best_r{}, best_w{};
     const bool have_pair = pick_best_pair(red_poles, white_poles, best_r, best_w);
     if (have_pair)
     {
       const cv::Point mid((best_r.cx + best_w.cx) / 2, (best_r.cy + best_w.cy) / 2);
 
-      // ✅ dot between the detected poles (BGR yellow)
       cv::circle(overlay_out, mid, 8, cv::Scalar(0, 255, 255), -1);
 
-      // draw a line to show pairing (optional but helpful)
       cv::line(overlay_out, cv::Point(best_r.cx, best_r.cy), cv::Point(best_w.cx, best_w.cy),
                cv::Scalar(0, 255, 255), 2);
 
-      // If you only have 1+1, still return a usable lane center based on this midpoint.
-      // (prevents endless spin when fit needs 2+2)
       x_center = static_cast<double>(mid.x);
-      lane_theta = 0.0; // no line-fit yet => no theta feed-forward
+      lane_theta = 0.0; 
     }
     else
     {
-      return false; // no red+white pair => no lane
+      return false; 
     }
 
-    // If we *also* have enough points, do the original line-fit for better theta
     if (red_poles.size() < 2 || white_poles.size() < 2) {
-      return true; // lane detected via midpoint dot
+      return true; 
     }
 
     const int H = bgr.rows;
     const int W = bgr.cols;
     const int y_look = clampi(static_cast<int>(lane_lookahead_frac_ * H), 0, H - 1);
 
-    // Fit x = a*y + b using least squares
     auto fit_line = [](const std::vector<Pole> &poles, double &a, double &b) {
       double Syy = 0, Sy = 0, S1 = 0, Sxy = 0, Sx = 0;
       for (const auto &p : poles) {
@@ -420,11 +402,9 @@ private:
     const double x_right = aw * y_look + bw;
 
     if (x_left >= x_right) {
-      // fallback: keep midpoint lane
       return true;
     }
 
-    // refined center from fitted lines
     x_center = clampd(0.5 * (x_left + x_right), 0.0, static_cast<double>(W - 1));
 
     const double a_center = 0.5 * (ar + aw);
@@ -441,7 +421,6 @@ private:
     draw_xy(ar, br, cv::Scalar(0, 0, 255));
     draw_xy(aw, bw, cv::Scalar(220, 220, 220));
 
-    // green dot at lookahead refined center
     cv::circle(overlay_out, cv::Point(static_cast<int>(x_center), y_look), 6, cv::Scalar(0, 255, 0), -1);
     cv::line(overlay_out, cv::Point(W / 2, 0), cv::Point(W / 2, H - 1), cv::Scalar(0, 255, 255), 1);
 
@@ -490,7 +469,6 @@ private:
   kf_x_ = x0;
   kf_v_ = 0.0;
 
-  // start with moderate uncertainty
   P00_ = 500.0; P01_ = 0.0;
   P10_ = 0.0;   P11_ = 500.0;
 }
@@ -565,13 +543,11 @@ void kf_update(double z_meas)
     if (dt <= 1e-6) return;
     prev_time_ = now;
 
-    // KF predict every cycle (even if lane not detected)
     if (kf_inited_) {
       kf_predict(dt);
     }
 
 
-    // ----- Depth PID -----
     const double depth_error = target_depth_ - depth_;
     integral_depth_ += depth_error * dt;
     const double derivative_depth = (depth_error - prev_depth_error_) / dt;
@@ -583,18 +559,15 @@ void kf_update(double z_meas)
       kd_depth_ * derivative_depth;
     heave = clampd(heave, -max_heave_cmd_, max_heave_cmd_);
 
-    // ----- Attitude stabilization (PD) -----
     double roll_cmd  = kp_roll_  * (0.0 - roll_)  + kd_roll_  * (0.0 - roll_rate_);
     double pitch_cmd = kp_pitch_ * (0.0 - pitch_) + kd_pitch_ * (0.0 - pitch_rate_);
     roll_cmd  = clampd(roll_cmd,  -max_att_cmd_, max_att_cmd_);
     pitch_cmd = clampd(pitch_cmd, -max_att_cmd_, max_att_cmd_);
 
-    // ----- Lane detection -----
     double x_center = 0.0, lane_theta = 0.0;
     cv::Mat red_mask, white_mask, overlay;
     const bool lane_ok = detect_lane(image_, x_center, lane_theta, red_mask, white_mask, overlay);
 
-    // KF measurement update when we have a lane measurement
     if (lane_ok) {
       if (!kf_inited_) {
         kf_reset(x_center);
@@ -602,7 +575,6 @@ void kf_update(double z_meas)
         kf_update(x_center);
       }
 
-      // Replace raw measurement with filtered value for control
       x_center = kf_x_;
     } else {
       int y_draw = static_cast<int>(0.65 * image_.rows);
@@ -627,7 +599,6 @@ void kf_update(double z_meas)
       }
     }
 
-    // ----- Control output -----
     geometry_msgs::msg::Twist cmd;
     cmd.linear.z = heave;
     cmd.angular.x = roll_cmd;
@@ -652,11 +623,10 @@ void kf_update(double z_meas)
 
     last_lane_seen_time_ = now;
 
-    // Pixel error: positive => lane is left of center => yaw left
     const double error_px = (img_cx - x_center);
 
     const double yaw_track = kp_yaw_px_ * error_px;
-    const double yaw_ff = -k_lane_theta_ * lane_theta;   // if midpoint-only, theta=0 so this is harmless
+    const double yaw_ff = -k_lane_theta_ * lane_theta;   
     const double yaw_damp = -kd_yaw_ * yaw_rate_;
 
     const double yaw_cmd = clampd(yaw_track + yaw_ff + yaw_damp, -max_yaw_, max_yaw_);
@@ -675,7 +645,6 @@ void kf_update(double z_meas)
   }
 
 private:
-  // params
   bool debug_{true};
   bool show_cv_{false};
   bool publish_debug_{true};
@@ -693,16 +662,14 @@ private:
 
   double forward_speed_{0.35}, forward_speed_search_{0.05};
 
-  // ---- KF for lane center (x_center in pixels) ----
   bool kf_inited_{false};
-  double kf_x_{0.0};      // state: x_center
-  double kf_v_{0.0};      // state: x_center velocity (px/s)
-  double P00_{1.0}, P01_{0.0}, P10_{0.0}, P11_{1.0};  // covariance 2x2
+  double kf_x_{0.0};      
+  double kf_v_{0.0};      
+  double P00_{1.0}, P01_{0.0}, P10_{0.0}, P11_{1.0};  
 
-  // tune these
-  double q_pos_{50.0};    // process noise for position
-  double q_vel_{200.0};   // process noise for velocity
-  double r_meas_{400.0};  // measurement noise (pixels^2)
+  double q_pos_{50.0};    
+  double q_vel_{200.0};   
+  double r_meas_{400.0};  
 
 
   int min_area_{300};
@@ -711,11 +678,9 @@ private:
   int morph_ksize_{5};
   int max_poles_each_color_{6};
 
-  // HSV scalars
   cv::Scalar red1_low_, red1_high_, red2_low_, red2_high_;
   cv::Scalar white_low_, white_high_;
 
-  // state
   cv::Mat image_;
   bool have_image_{false};
 
@@ -726,7 +691,6 @@ private:
   double roll_rate_{0.0}, pitch_rate_{0.0}, yaw_rate_{0.0};
   bool have_imu_{false};
 
-  // PID memory
   double integral_depth_{0.0};
   double prev_depth_error_{0.0};
 
@@ -735,14 +699,12 @@ private:
 
   uint64_t frame_count_{0};
 
-  // ROS
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_pub_;
   rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr image_sub_;
   rclcpp::Subscription<ros_gz_interfaces::msg::Altimeter>::SharedPtr alt_sub_;
   rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
   rclcpp::TimerBase::SharedPtr timer_;
 
-  // debug image pubs
   rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr dbg_rgb_pub_;
   rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr dbg_red_pub_;
   rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr dbg_white_pub_;

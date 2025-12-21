@@ -15,23 +15,18 @@ def generate_launch_description():
     share_description = get_package_share_directory(pkg_description)
     prefix_description = get_package_prefix(pkg_description)
 
-    # ---- World + robot ----
     world_path = os.path.join(share_description, 'worlds', 'woolletPool_testworld.sdf')
 
-    # This file contains xacro tags even if it ends in .urdf
     xacro_file = os.path.join(share_description, 'urdf', 'cubeexperimental', 'auv.urdf')
 
-    # IMPORTANT: Command() concatenates tokens; you MUST include a space token.
     robot_description_cmd = Command([
         FindExecutable(name='xacro'),
         ' ',
         xacro_file
     ])
 
-    # Gazebo plugin search path (for your custom .so plugins in auv_description)
     gz_system_plugin_path = os.path.join(prefix_description, 'lib')
 
-    # Model/resource paths (support both install/ and src/ layouts)
     worldmodels_path = os.path.join(share_description, 'worldmodels')
     sim_models_path = os.path.join(worldmodels_path, 'Sim-Models')
     src_worldmodels = worldmodels_path.replace('/install/', '/src/')
@@ -47,20 +42,20 @@ def generate_launch_description():
         os.environ.get("GZ_SIM_RESOURCE_PATH", "")
     ] if p and os.path.exists(p)])
 
-    # ---- Gazebo ----
+
     gz_sim = ExecuteProcess(
         cmd=['gz', 'sim', '-r', '-v', '4', world_path],
         output='screen'
     )
 
-    # ---- Spawn robot ----
+
     spawn_auv = Node(
         package='ros_gz_sim',
         executable='create',
         name='spawn_auv',
         output='screen',
         arguments=[
-            '-world', 'nogravity_world',
+            '-world', 'woolletPool_testworld',
             '-name', 'auv',
             '-string', robot_description_cmd,
             '-allow_renaming', 'true',
@@ -68,7 +63,7 @@ def generate_launch_description():
         ]
     )
 
-    # ---- Bridges ----
+
     bridge_camera = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -125,7 +120,7 @@ def generate_launch_description():
         arguments=['/auve1/torque_body@geometry_msgs/msg/Vector3@gz.msgs.Vector3d'],
     )
 
-    # ---- cmd_vel -> wrench ----
+
     cmd_bridge_node = Node(
         package=pkg_description,
         executable='cmd_bridge_cpp',
@@ -138,7 +133,7 @@ def generate_launch_description():
         ],
     )
 
-    # ---- Lane navigator ----
+
     lane_node = Node(
         package=pkg_autonomy,
         executable='lane_navigator_cpp',
@@ -167,7 +162,7 @@ def generate_launch_description():
             {'max_yaw': 0.5},
             {'search_yaw': 0.20},
 
-            {'forward_speed': 1.75},
+            {'forward_speed': 5.00}, #should be 1.75 by default
             {'forward_speed_search': 0.20},
 
             {'hsv_red1_low':  [0,   100, 100]},
@@ -186,9 +181,11 @@ def generate_launch_description():
 
     return LaunchDescription([
 
-         SetEnvironmentVariable('DISPLAY', ':1'),
+        #  SetEnvironmentVariable('DISPLAY', ':1'),
+        # SetEnvironmentVariable('QT_QPA_PLATFORM', 'xcb'),
+        # SetEnvironmentVariable('GDK_BACKEND', 'x11'),
         SetEnvironmentVariable('QT_QPA_PLATFORM', 'xcb'),
-        SetEnvironmentVariable('GDK_BACKEND', 'x11'),
+
 
         SetEnvironmentVariable('GAZEBO_MODEL_PATH', gazebo_model_path),
         SetEnvironmentVariable('GZ_SIM_SYSTEM_PLUGIN_PATH', gz_system_plugin_path),

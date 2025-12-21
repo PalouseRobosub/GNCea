@@ -1,5 +1,5 @@
 <sdf version='1.10'>
-  <world name='nogravity_world'>
+  <world name='woolletPool_world'>
     <plugin name='gz::sim::systems::Physics' filename='gz-sim-physics-system'/>
     <plugin name='gz::sim::systems::UserCommands' filename='gz-sim-user-commands-system'/>
     <plugin name='gz::sim::systems::SceneBroadcaster' filename='gz-sim-scene-broadcaster-system'/>

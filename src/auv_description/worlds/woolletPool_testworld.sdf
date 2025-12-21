@@ -1,0 +1,348 @@
+<sdf version='1.10'>
+  <world name='woolletPool_testworld'>
+    <plugin name='gz::sim::systems::Physics' filename='gz-sim-physics-system'/>
+    <plugin name='gz::sim::systems::UserCommands' filename='gz-sim-user-commands-system'/>
+    <plugin name='gz::sim::systems::SceneBroadcaster' filename='gz-sim-scene-broadcaster-system'/>
+    <plugin name='gz::sim::systems::Sensors' filename='gz-sim-sensors-system'>
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <plugin
+      filename="gz-sim-altimeter-system"
+      name="gz::sim::systems::Altimeter">
+    </plugin>
+    <plugin
+      filename="gz-sim-imu-system"
+      name="gz::sim::systems::Imu">
+    </plugin>     
+
+    <gravity>0 0 -9.81</gravity>
+    <magnetic_field>5.5645e-06 2.28758e-05 -4.23884e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.53 0.81 0.92 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <!-- Water plane -->
+    <model name='water_plane'>
+      <static>true</static>
+      <link name='link'>
+        <visual name='water_plane'>
+          <geometry>
+            <plane>
+              <size>100 100</size>
+              <normal>0 0 1</normal>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0 0 1 0.5</ambient>
+            <diffuse>0 0 1 0.5</diffuse>
+            <specular>0 0 1 0.5</specular>
+          </material>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+
+    <model name="pool_pole_field">
+    <static>true</static>
+
+    <!-- Pool center is at (0,0), so leave this at 0 0 unless you want to shift the whole field -->
+    <pose>5.0 0 -1.5 0 0 1.57</pose>
+
+    <!-- Estimates:
+        pole diameter = 0.075 m  (radius 0.0375)
+        pole length   = 0.90  m
+        clearance above floor = 0.45 m  => center_z = 0.45 + 0.90/2 = 0.90
+        column spacing: x = -1.5, 0, +1.5
+        row spacing:    y = -2.5, 0, +2.5
+    -->
+
+    <!-- Helper: cylinder geometry repeated everywhere -->
+    <!-- Row y = -2.5 -->
+    <link name="rowm1_left_white">
+        <pose>-1.5 -2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="rowm1_center_red">
+        <pose>0.0 -2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="rowm1_right_white">
+        <pose>1.5 -2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    <!-- Row y = 0 -->
+    <link name="row0_left_white">
+        <pose>-1.5 0.0 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="row0_center_red">
+        <pose>0.0 0.0 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="row0_right_white">
+        <pose>1.5 0.0 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    <!-- Row y = +2.5 -->
+    <link name="rowp1_left_white">
+        <pose>-1.5 2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="rowp1_center_red">
+        <pose>0.0 2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="rowp1_right_white">
+        <pose>1.5 2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    </model>
+
+    <model name="pool_pole_field0">
+    <static>true</static>
+
+    <!-- Pool center is at (0,0), so leave this at 0 0 unless you want to shift the whole field -->
+    <pose>10.0 0 -1.5 0 0 1.57</pose>
+
+    <!-- Estimates:
+        pole diameter = 0.075 m  (radius 0.0375)
+        pole length   = 0.90  m
+        clearance above floor = 0.45 m  => center_z = 0.45 + 0.90/2 = 0.90
+        column spacing: x = -1.5, 0, +1.5
+        row spacing:    y = -2.5, 0, +2.5
+    -->
+
+    <!-- Helper: cylinder geometry repeated everywhere -->
+    <!-- Row y = -2.5 -->
+    <link name="rowm1_left_white">
+        <pose>-1.5 -2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="rowm1_center_red">
+        <pose>0.0 -2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="rowm1_right_white">
+        <pose>1.5 -2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    <!-- Row y = 0 -->
+    <link name="row0_left_white">
+        <pose>-1.5 0.0 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="row0_center_red">
+        <pose>0.0 0.0 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="row0_right_white">
+        <pose>1.5 0.0 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    <!-- Row y = +2.5 -->
+    <link name="rowp1_left_white">
+        <pose>-1.5 2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="rowp1_center_red">
+        <pose>0.0 2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 0 0 1</ambient><diffuse>1 0 0 1</diffuse></material>
+        </visual>
+    </link>
+
+    <link name="rowp1_right_white">
+        <pose>1.5 2.5 0.9 0 0 0</pose>
+        <collision name="collision">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+        <geometry><cylinder><radius>0.0375</radius><length>0.9</length></cylinder></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+    </link>
+
+    </model>
+    
+
+    <!-- Observer camera -->
+    <model name='observer_camera'>
+      <static>true</static>
+      <pose>-4 0 2 0 0 0</pose>
+      <link name='camera_link'>
+        <sensor name='observer_camera_sensor' type='camera'>
+          <pose>0 0 0 0 0 0</pose>
+          <topic>/observer/image_raw</topic>
+          <update_rate>30</update_rate>
+          <camera name='__default__'>
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>RGB_INT8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+          </camera>
+        </sensor>
+      </link>
+      <self_collide>false</self_collide>
+    </model>
+
+    <!-- Woollett Pool model -->
+    <model name='WoollettPool'>
+      <link name='link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://woollett_pool_2024/WoollettPool.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://woollett_pool_2024/WoollettPool.dae</uri>
+            </mesh>
+          </geometry>
+        </collision>
+        <pose>0 0 0 0 0 0</pose>
+      </link>
+      <pose>0 0 0 0 0 1.57</pose>
+      <static>true</static>
+      <self_collide>false</self_collide>
+    </model>
+
+  </world>
+</sdf>

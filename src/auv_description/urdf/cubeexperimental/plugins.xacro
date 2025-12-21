@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot name="plugins_module" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="buoyancy_plugin" params="link_name water_level fluid_density volume">
+    <gazebo>
+      <plugin filename="libsimple_buoyancy.so" name="gz::sim::systems::SimpleBuoyancy">
+        <link_name>${link_name}</link_name>
+        <water_level>${water_level}</water_level>
+        <fluid_density>${fluid_density}</fluid_density>
+        <volume>${volume}</volume>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="wasd_plugin" params="link_name topic">
+    <gazebo>
+      <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
+        <link_name>${link_name}</link_name>
+        <topic>${topic}</topic>
+        <lever>0 0 0</lever>
+        <hold_ms>-1</hold_ms>
+        <scale>1.0</scale>
+        <force_scale>1.0</force_scale>
+        <torque_scale>1.0</torque_scale>
+        <force_topic>/auve1/force_body</force_topic>
+        <torque_topic>/auve1/torque_body</torque_topic>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="hydrodynamics_plugin" params="link_name fluid_density">
+    <gazebo>
+      <plugin name="simple_hydrodynamics" filename="libsimple_hydrodynamics.so">
+        <link_name>${link_name}</link_name>
+
+        <!-- Water properties -->
+        <water_density>${fluid_density}</water_density>
+        <default_current>0 0 0</default_current>  <!-- world-frame m/s -->
+
+        <!-- Translational drag (body frame) -->
+        <linear_drag>20 20 20</linear_drag>               <!-- or try 20 20 20 -->
+        <quadratic_drag>550 550 550</quadratic_drag>   <!-- N/(m/s)^2 -->
+
+        <!-- Rotational drag (body frame) -->
+        <angular_drag>0 0 0</angular_drag>             <!-- or try 5 5 5 -->
+        <quadratic_angular_drag>137 137 137</quadratic_angular_drag> <!-- N·m/(rad/s)^2 -->
+      </plugin>
+    </gazebo>
+        
+  </xacro:macro>
+
+  <xacro:macro name="torpedo_plugin" params="link_name">
+    <gazebo>
+    <plugin name="auv_sim::TorpedoShooterPlugin" filename="libtorpedo_shooter.so">
+    <torpedo_sdf_path>$(find auv_description)/urdf/torpedo/torpedo1.sdf</torpedo_sdf_path>
+    <launcher_link>${link_name}</launcher_link>
+    <shoot_force>20</shoot_force>
+    <shoot_duration>0.1</shoot_duration>
+    <initial_velocity>3.0</initial_velocity>
+    </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  
+
+</robot>
