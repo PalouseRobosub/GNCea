@@ -174,6 +174,8 @@ ros2 run ros_gz_bridge parameter_bridge \
 
 This is my attempt at 2025s game. This was made so I could test opencv navigation and slaloming. 
 
+https://drive.google.com/file/d/1oP0x0Nx4gbNLD_p_7pBtzQwXXJvDacup/view?usp=sharing
+
 To test autonomy test 2:
 
 ```
