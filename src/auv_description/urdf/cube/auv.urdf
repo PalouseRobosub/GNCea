@@ -66,10 +66,6 @@
     link_name="cube_link"
   />
 
-  <!-- SIMPLE HYDRODYNAMICS -->
-  <xacro:hydrodynamics_plugin
-  link_name="${buoyancy_link}"
-  fluid_density="${buoyancy_fluid_density}"/>
 
 
 
