@@ -17,13 +17,11 @@ def generate_launch_description():
     robot_description_cmd = Command(['xacro ', xacro_file])
     plugin_search_path = os.path.join(prefix, 'lib')
 
-    # 1) Gazebo
     gz_server = ExecuteProcess(
         cmd=['gz', 'sim', '-r', '-v', '4', world_path],
         output='screen'
     )
 
-    # 2) Spawn the AUV from the processed xacro string
     spawn_auv = Node(
         package='ros_gz_sim',
         executable='create',
@@ -37,7 +35,6 @@ def generate_launch_description():
         ]
     )
 
-    # 3) Camera bridges (unique nodes, created once)
     image_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -53,7 +50,6 @@ def generate_launch_description():
         arguments=['/camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo'],
     )
 
-    # 4) LiDAR bridge: GZ PointCloudPacked -> ROS PointCloud2, rename to /scan/points
     lidar_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -74,9 +70,7 @@ def generate_launch_description():
 
         gz_server,
 
-        # give the server a moment, then spawn the robot
         TimerAction(period=2.0, actions=[spawn_auv]),
 
-        # after the robot exists, start bridges (each node only ONCE)
         TimerAction(period=4.0, actions=[image_bridge, caminfo_bridge, lidar_bridge]),
     ])

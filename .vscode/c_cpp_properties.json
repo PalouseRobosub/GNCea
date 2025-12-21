@@ -2,11 +2,13 @@
   "configurations": [
     {
       "name": "ROS2-Jazzy",
+      "compileCommands": "${workspaceFolder}/build/compile_commands.json",
       "includePath": [
         "/opt/ros/jazzy/include/**",
         "${workspaceFolder}/install/**",
         "${workspaceFolder}/src/**",
         "/usr/include/gz/**",
+        "/usr/include/sdformat14/**",
         "/usr/include/opencv4",
         "/usr/include/opencv4/opencv2",
         "/usr/include/**"

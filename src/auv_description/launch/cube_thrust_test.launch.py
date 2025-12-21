@@ -12,20 +12,16 @@ def generate_launch_description():
     share = get_package_share_directory(pkg)
     prefix = get_package_prefix(pkg)
 
-    # Paths
     world_path = os.path.join(share, 'worlds', 'test_world.sdf')
     urdf_path  = os.path.join(share, 'urdf', 'cube', 'cube.urdf')
 
-    # Where your plugin .so installs
     plugin_search_path = os.path.join(prefix, 'lib')
 
-    # Start Gazebo Harmonic with your world
     gz_server = ExecuteProcess(
         cmd=['gz', 'sim', '-r', '-v', '4', world_path],
         output='screen'
     )
 
-    # Spawn the URDF cube
     spawn_cube = Node(
         package='ros_gz_sim',
         executable='create',
@@ -57,7 +53,6 @@ def generate_launch_description():
         DeclareLaunchArgument('force', default_value='100.0'),
         DeclareLaunchArgument('rate_hz', default_value='30.0'),
 
-        # Env so Gazebo can find your plugin + package resources
         SetEnvironmentVariable('GZ_SIM_SYSTEM_PLUGIN_PATH', plugin_search_path),
         SetEnvironmentVariable('GZ_SIM_RESOURCE_PATH', share),
 
@@ -66,7 +61,6 @@ def generate_launch_description():
 
         gz_server,
 
-        # Give the server a moment to advertise services before spawning
         TimerAction(period=2.0, actions=[spawn_cube]),
 
         # teleop,

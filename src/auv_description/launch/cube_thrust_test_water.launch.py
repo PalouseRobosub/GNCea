@@ -16,16 +16,13 @@ def generate_launch_description():
     world_path = os.path.join(share, 'worlds', 'water_world.sdf')
     urdf_path  = os.path.join(share, 'urdf', 'cube', 'cube.urdf')
 
-    # Where your plugin .so installs
     plugin_search_path = os.path.join(prefix, 'lib')
 
-    # Start Gazebo Harmonic with your world
     gz_server = ExecuteProcess(
         cmd=['gz', 'sim', '-r', '-v', '4', world_path],
         output='screen'
     )
 
-    # Spawn the URDF cube
     spawn_cube = Node(
         package='ros_gz_sim',
         executable='create',

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Launch guppy in Gazebo Harmonic (ROS 2 Jazzy) in a portable way.
+
 
 import os
 from launch import LaunchDescription
@@ -24,15 +24,12 @@ def _nodes(context):
 
     pkg_share = get_package_share_directory(PKG)
 
-    # 1) Read URDF
     with open(model_path, "r") as f:
         urdf_txt = f.read()
 
-    # 2) Replace package:// & model://<PKG>/ with absolute paths
     urdf_txt = urdf_txt.replace(f"package://{PKG}/", pkg_share + "/")
     urdf_txt = urdf_txt.replace(f"model://{PKG}/",   pkg_share + "/")
 
-    # 3) Temp URDF for the spawner
     ros_home = os.getenv("ROS_HOME", os.path.expanduser("~/.ros"))
     os.makedirs(ros_home, exist_ok=True)
     tmp_urdf = os.path.join(ros_home, "guppy_abs.urdf")
@@ -41,14 +38,12 @@ def _nodes(context):
 
     nodes = []
 
-    # Gazebo (ros_gz_sim)
     ros_gz = get_package_share_directory("ros_gz_sim")
     nodes.append(IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(ros_gz, "launch", "gz_sim.launch.py")),
         launch_arguments={"gz_args": f"-r -v 3 {world_path}"}.items()
     ))
 
-    # Joint state publisher
     if use_gui:
         nodes.append(Node(
             package="joint_state_publisher_gui",
@@ -64,7 +59,6 @@ def _nodes(context):
             output="screen",
         ))
 
-    # Robot state publisher
     nodes.append(Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
@@ -73,7 +67,6 @@ def _nodes(context):
         parameters=[{"robot_description": urdf_txt}],
     ))
 
-    # Spawn URDF in Gazebo
     nodes.append(Node(
         package="ros_gz_sim",
         executable="create",
@@ -82,7 +75,6 @@ def _nodes(context):
         arguments=["-name", name, "-file", tmp_urdf],
     ))
 
-    # RViz2 (optional)
     if use_rviz:
         nodes.append(Node(
             package="rviz2",
@@ -101,17 +93,13 @@ def generate_launch_description():
     default_world = os.path.join(pkg_share, "worlds", "woolletPool_world.sdf")
     default_rviz  = os.path.join(pkg_share, "rviz", "view_lidar.rviz")
 
-    # Paths that contain 'woollett_pool_2024' model folder
     sim_models_install = os.path.join(pkg_share, "worldmodels", "Sim-Models")
-    # Try to derive the source-space Sim-Models as well (useful while developing)
     sim_models_src = os.path.join(
         os.path.dirname(pkg_share).replace("install", "src"),
         "auv_description", "worldmodels", "Sim-Models"
     )
 
-    # Build env vars:
-    # - GAZEBO_MODEL_PATH: critical for resolving model://<name>/<mesh>
-    # - GZ_SIM_RESOURCE_PATH & IGN_GAZEBO_RESOURCE_PATH: helpful for worlds/plugins/resources
+
     gazebo_model_path = ":".join([
         sim_models_src,
         sim_models_install,

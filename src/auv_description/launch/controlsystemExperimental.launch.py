@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# Launch guppy in Gazebo Harmonic (ROS 2 Jazzy) in a portable way.
 
 import os
 from launch import LaunchDescription
@@ -22,16 +21,12 @@ def _nodes(context):
 
     pkg_share = get_package_share_directory(PKG)
 
-    # 1) Read URDF
     with open(model_path, "r") as f:
         urdf_txt = f.read()
 
-    # 2) Make Gazebo happy: convert package:// → absolute paths
-    #    (Also handles any lingering model:// for this package)
     urdf_txt = urdf_txt.replace("package://{}/".format(PKG), pkg_share + "/")
     urdf_txt = urdf_txt.replace("model://{}/".format(PKG),   pkg_share + "/")
 
-    # 3) Write a temp URDF for the spawner
     ros_home = os.getenv("ROS_HOME", os.path.expanduser("~/.ros"))
     os.makedirs(ros_home, exist_ok=True)
     tmp_urdf = os.path.join(ros_home, "guppy_abs.urdf")
@@ -40,14 +35,12 @@ def _nodes(context):
 
     nodes = []
 
-    # Launch Gazebo (ros_gz_sim)
     ros_gz = get_package_share_directory("ros_gz_sim")
     nodes.append(IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(ros_gz, "launch", "gz_sim.launch.py")),
         launch_arguments={"gz_args": f"-r -v 3 {world_path}"}.items()
     ))
 
-    # Joint state publisher (GUI optional)
     if use_gui:
         nodes.append(Node(
             package="joint_state_publisher_gui",
@@ -63,7 +56,6 @@ def _nodes(context):
             output="screen",
         ))
 
-    # Robot state publisher (feeds TF and RViz)
     nodes.append(Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
@@ -72,7 +64,6 @@ def _nodes(context):
         parameters=[{"robot_description": urdf_txt}],
     ))
 
-    # Spawn the URDF into Gazebo (use the rewritten file)
     nodes.append(Node(
         package="ros_gz_sim",
         executable="create",
@@ -81,7 +72,6 @@ def _nodes(context):
         arguments=["-name", name, "-file", tmp_urdf],
     ))
 
-    # RViz2 (optional)
     if use_rviz:
         nodes.append(Node(
             package="rviz2",
@@ -99,7 +89,6 @@ def generate_launch_description():
     default_world = os.path.join(pkg_share, "worlds", "nogravity_world.sdf")
     default_rviz  = os.path.join(pkg_share, "rviz", "view_lidar.rviz")
 
-    # Helpful for textures or other resources looked up by Gazebo
     set_gz_path = SetEnvironmentVariable(
         name="GZ_SIM_RESOURCE_PATH",
         value=f"{pkg_share}:{os.environ.get('GZ_SIM_RESOURCE_PATH','')}"

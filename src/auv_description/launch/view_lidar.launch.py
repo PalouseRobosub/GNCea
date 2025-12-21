@@ -16,7 +16,6 @@ def generate_launch_description():
     xacro_path = os.path.join(share, 'urdf', 'cube', 'auv.urdf')
     rviz_cfg   = os.path.join(share, 'rviz', 'view_lidar.rviz')
 
-    # IMPORTANT: include a literal space so Command doesn't glue tokens
     robot_description = ParameterValue(Command(['xacro', ' ', xacro_path]), value_type=str)
 
     plugin_path = os.path.join(prefix, 'lib')
@@ -51,7 +50,6 @@ def generate_launch_description():
         parameters=[{'robot_description': robot_description}]
     )
 
-    # static TF: sensor frame -> lidar_link
     lidar_sensor_tf = Node(
         package='tf2_ros', executable='static_transform_publisher',
         name='lidar_sensor_tf',
