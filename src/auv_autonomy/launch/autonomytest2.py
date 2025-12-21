@@ -162,7 +162,7 @@ def generate_launch_description():
             {'max_yaw': 0.5},
             {'search_yaw': 0.20},
 
-            {'forward_speed': 5.00}, #should be 1.75 by default
+            {'forward_speed': 5.00}, #should be 1.75 by default, but 5.00 for testing
             {'forward_speed_search': 0.20},
 
             {'hsv_red1_low':  [0,   100, 100]},

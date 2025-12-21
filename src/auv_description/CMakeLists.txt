@@ -52,6 +52,16 @@ install(TARGETS torpedo_shooter
   LIBRARY DESTINATION lib
 )
 
+# --- Plugin: cmd_bridge_cpp ---
+add_executable(cmd_bridge_cpp src/cmd_bridge_cpp.cpp)
+ament_target_dependencies(cmd_bridge_cpp rclcpp geometry_msgs)
+
+install(
+  TARGETS cmd_bridge_cpp
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+
 # --- Plugin: Simple buoyancy ---
 add_library(simple_buoyancy SHARED
   src/simple_buoyancy.cc
