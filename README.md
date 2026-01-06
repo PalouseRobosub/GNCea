@@ -170,6 +170,11 @@ ros2 run ros_gz_bridge parameter_bridge \
   /altimeter@ros_gz_interfaces/msg/Altimeter@gz.msgs.Altimeter
 ```
 
+bridge rgbd on guppy:
+```
+ros2 run ros_gz_bridge parameter_bridge   /guppy/camera/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked   /guppy/camera/image@sensor_msgs/msg/Image@gz.msgs.Image   /guppy/camera/depth_image@sensor_msgs/msg/Image@gz.msgs.Image   /guppy/camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo
+```
+
 # 2025 AUTONOMY CHALLENGE TESTING
 
 This is my attempt at 2025s game. This was made so I could test opencv navigation and slaloming. 
