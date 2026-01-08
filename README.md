@@ -190,6 +190,8 @@ ros2 run ros_gz_bridge parameter_bridge \
 
 # TO ECHO DVL ON GUPPY
 
+<img width="800" height="676" alt="guppydvl" src="https://github.com/user-attachments/assets/ebaa00eb-71bb-4cbe-8e93-b735d6d3310a" />
+
 ```
 gz topic -e -t /guppy/dvl
 ```
