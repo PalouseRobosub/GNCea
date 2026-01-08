@@ -169,6 +169,7 @@ ros2 run ros_gz_bridge parameter_bridge \
   /imu@sensor_msgs/msg/Imu@gz.msgs.IMU \
   /altimeter@ros_gz_interfaces/msg/Altimeter@gz.msgs.Altimeter
 ```
+# TO ACTIVATE RGBD AND CAMERAS ON GUPPY
 
 bridge rgbd on guppy:
 ```
@@ -187,6 +188,14 @@ ros2 run ros_gz_bridge parameter_bridge \
   /guppy/raw_4/image@sensor_msgs/msg/Image@gz.msgs.Image \
   /guppy/raw_4/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo
 ```
+
+# TO ECHO DVL ON GUPPY
+
+```
+gz topic -e -t /guppy/dvl
+```
+
+Please not that a node will be neccesary to bridge dvl data so that you can listen to the topic.
 
 # 2025 AUTONOMY CHALLENGE TESTING
 

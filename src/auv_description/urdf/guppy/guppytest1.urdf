@@ -2,7 +2,8 @@
 <!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
-<robot xmlns:xacro="http://ros.org/wiki/xacro" name="guppytest1">
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="guppytest1" xmlns:gz="http://gazebosim.org/schema">
+  
 
 
   <gazebo>
@@ -753,6 +754,72 @@
 
       <optical_frame_id>cam_rr_optical_frame</optical_frame_id>
     </camera>
+  </sensor>
+</gazebo>
+
+<!-- DVL link -->
+<link name="dvl_link">
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="0.05"/>
+    <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+  </inertial>
+
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.03 0.03 0.03"/> 
+    </geometry>
+    <material name="black">
+      <color rgba="0 0 0 1"/>
+    </material>
+  </visual>
+
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.03 0.03 0.03"/>
+    </geometry>
+  </collision>
+</link>
+
+<!-- Fixed joint: base_link -> dvl_link -->
+<joint name="dvl_joint" type="fixed">
+  <parent link="base_link"/>
+  <child link="dvl_link"/>
+  <origin xyz="0.0 0.0 -0.20" rpy="0 0 0"/>
+</joint>
+<!-- DVL sensor -->
+
+
+<gazebo reference="dvl_link">
+  <sensor name="dvl" type="custom" gz:type="dvl">
+    <always_on>true</always_on>
+    <update_rate>10</update_rate>
+    <topic>/guppy/dvl</topic>
+
+    <gz:dvl>
+      <arrangement degrees="true">
+        <beam id="1"><aperture>22.5</aperture><rotation>45</rotation><tilt>30</tilt></beam>
+        <beam id="2"><aperture>22.5</aperture><rotation>135</rotation><tilt>30</tilt></beam>
+        <beam id="3"><aperture>22.5</aperture><rotation>225</rotation><tilt>30</tilt></beam>
+        <beam id="4"><aperture>22.5</aperture><rotation>315</rotation><tilt>30</tilt></beam>
+        <visualize>true</visualize>
+      </arrangement>
+
+      <tracking>
+        <bottom_mode>
+          <when>always</when>
+          <noise type="gaussian"><stddev>1</stddev></noise>
+          <visualize>true</visualize>
+        </bottom_mode>
+      </tracking>
+
+      <minimum_range>0.05</minimum_range>
+      <maximum_range>50</maximum_range>
+      <resolution>0.0001</resolution>
+      <reference_frame>dvl_link</reference_frame>
+    </gz:dvl>
   </sensor>
 </gazebo>
 

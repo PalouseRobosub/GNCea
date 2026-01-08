@@ -14,7 +14,11 @@
     <plugin
       filename="gz-sim-imu-system"
       name="gz::sim::systems::Imu">
-    </plugin>    
+    </plugin>
+    <plugin
+      filename="gz-sim-dvl-system"
+      name="gz::sim::systems::DopplerVelocityLogSystem">
+    </plugin>         
 
     <gravity>0 0 0</gravity>
     <magnetic_field>5.5645e-06 2.28758e-05 -4.23884e-05</magnetic_field>

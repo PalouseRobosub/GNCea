@@ -19,7 +19,11 @@
       filename="gz-sim-imu-system"
       name="gz::sim::systems::Imu">
     </plugin>     
-
+    <plugin
+      filename="gz-sim-dvl-system"
+      name="gz::sim::systems::DopplerVelocityLogSystem">
+    </plugin> 
+    
     <!-- Gravity -->
     <gravity>0 0 -9.81</gravity>
 
