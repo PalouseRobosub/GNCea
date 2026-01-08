@@ -1,9 +1,19 @@
+<img width="1239" height="855" alt="GNCealogo" src="https://github.com/user-attachments/assets/ec2885ba-db83-4356-ac3a-4d351a17c34e" />
+
 # GNCea | Guidance Navigation Control for SEA 
+
+<p align="center">
+    <img src="./guppy.png" width="400">
+</p>
+<h1 align="center">Guppy!</h1>
+<p align="center">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/palouserobosub/gncea">
+    <img alt="ROS2 version" src="https://img.shields.io/badge/ros2-jazzy-red?logo=ros">
+</p>
 
 An AUV simulator developed for Palouse RoboSub based on ROS 2 Jazzy and Gazebo Harmonic, featuring custom C++ plugins for thrust allocation, buoyancy compensation, and hydrodynamic drag modeling. The simulator supports real-time 6-DOF teleoperation, autonomy modules for depth and altitude regulation, and integrated onboard perception through a forward-facing camera and 3D LiDAR sensor for image and point cloud generation, enabling environmental mapping, navigation, and autonomy testing in dynamic underwater environments.
 
 <img width="1028" height="911" alt="image" src="https://github.com/user-attachments/assets/00de4348-a3af-4ce9-9a0a-f30b88ac70f2" />
-
 
 <img width="1028" height="911" alt="image" src="https://github.com/user-attachments/assets/0adf25f2-3b9e-4b20-826e-90a6322660bf" />
 
@@ -210,5 +220,22 @@ To test autonomy test 2:
 ros2 launch auv_autonomy autonomytest2.py
 ```
 
+# Contact And Sponsorship
 
+## Contact and Sponsorship
+Need to get in touch? Reach out to `robosub.vcea@wsu.edu`.
+
+We are sponsored by many generous companies and people, including:
+- OSH Park PCBs
+- Blue Robotics
+- Real Digital
+- Solidworks
+- Vectornav
+- JoeScan
+- WaterLinked
+- LattePanda
+- Tektronix
+- And many many other personal supporters through their generous donations!
+
+Do you like our work? Consider [sponsoring](https://foundation.wsu.edu/give/?fund=ffdf2195-2497-4361-b697-44e5024bf0b0) our team!
 
