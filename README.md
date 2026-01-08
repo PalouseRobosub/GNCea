@@ -1,11 +1,12 @@
-<img width="1239" height="855" alt="GNCealogo" src="https://github.com/user-attachments/assets/ec2885ba-db83-4356-ac3a-4d351a17c34e" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ec2885ba-db83-4356-ac3a-4d351a17c34e"
+       alt="GNCealogo"
+       width="400" />
+</p>
+
 
 # GNCea | Guidance Navigation Control for SEA 
 
-<p align="center">
-    <img src="./guppy.png" width="400">
-</p>
-<h1 align="center">Guppy!</h1>
 <p align="center">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/palouserobosub/gncea">
     <img alt="ROS2 version" src="https://img.shields.io/badge/ros2-jazzy-red?logo=ros">
