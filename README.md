@@ -221,8 +221,6 @@ To test autonomy test 2:
 ros2 launch auv_autonomy autonomytest2.py
 ```
 
-# Contact And Sponsorship
-
 ## Contact and Sponsorship
 Need to get in touch? Reach out to `robosub.vcea@wsu.edu`.
 
