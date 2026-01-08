@@ -1,5 +1,5 @@
 # GNCea
-GNCea | Auv Simulator Experimental 2 (Work In Progress)
+# GNCea | Guidance Navigation Control for SEA 
 
 An AUV simulator developed for Palouse RoboSub based on ROS 2 Jazzy and Gazebo Harmonic, featuring custom C++ plugins for thrust allocation, buoyancy compensation, and hydrodynamic drag modeling. The simulator supports real-time 6-DOF teleoperation, autonomy modules for depth and altitude regulation, and integrated onboard perception through a forward-facing camera and 3D LiDAR sensor for image and point cloud generation, enabling environmental mapping, navigation, and autonomy testing in dynamic underwater environments.
 
