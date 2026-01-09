@@ -4,8 +4,13 @@
        width="400" />
 </p>
 
+<div align="center">
 
-# GNCea | Guidance Navigation Control for SEA 
+# GNCea
+## Guidance Navigation Control for SEA
+
+</div>
+
 
 <p align="center">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/palouserobosub/gncea">
