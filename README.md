@@ -86,7 +86,6 @@ To launch auv.urdf
 
 ```
 ros2 launch auv_description testing.launch.py
-
 ```
 
 Activate camera bridge
