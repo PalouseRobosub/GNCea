@@ -100,8 +100,8 @@ def generate_launch_description():
         DeclareLaunchArgument("model", default_value=default_model, description="Path to URDF"),
         DeclareLaunchArgument("world", default_value=default_world, description="Path to Gazebo world SDF"),
         DeclareLaunchArgument("name",  default_value="guppy",        description="Entity name in Gazebo"),
-        DeclareLaunchArgument("gui",   default_value="true",         description="Use joint_state_publisher_gui"),
-        DeclareLaunchArgument("rviz",  default_value="true",         description="Launch RViz2"),
+        DeclareLaunchArgument("gui",   default_value="false",         description="Use joint_state_publisher_gui"),
+        DeclareLaunchArgument("rviz",  default_value="false",         description="Launch RViz2"),
         DeclareLaunchArgument("rviz_config", default_value=default_rviz, description="RViz config file"),
         OpaqueFunction(function=_nodes),
     ])
