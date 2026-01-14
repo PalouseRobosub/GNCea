@@ -49,10 +49,10 @@ public:
 
     std::string temp_link = (sdf && sdf->HasElement("link_name")) ?
                             sdf->Get<std::string>("link_name") : "base_link";
-
     motor_speed_topic  = (sdf && sdf->HasElement("motor_speed_topic"))  ? sdf->Get<std::string>("motor_speed_topic")  : "/motor_speed";
 
-    node_ = std::make_shared<rclcpp::Node>(("wasd_body_wrench_plugin_" + motor_speed_topic).c_str());
+
+    node_ = std::make_shared<rclcpp::Node>(("wasd_body_wrench_plugin_" + temp_link ).c_str());
     clock_type_ = node_->get_clock()->get_clock_type();
     last_force_time_  = rclcpp::Time(0, 0, clock_type_);
     last_torque_time_ = rclcpp::Time(0, 0, clock_type_);
@@ -121,6 +121,7 @@ public:
 
   }
 
+
   void PreUpdate(const UpdateInfo &info, EntityComponentManager &ecm) override
   {
     if (info.paused) return;
@@ -161,22 +162,22 @@ public:
 
     // link_.AddWorldForce(ecm, f_world);
 
-    auto velComp = ecm.Component<gz::sim::components::LinearVelocity>(link_.Entity());
-    auto velAComp = ecm.Component<gz::sim::components::AngularVelocity>(link_.Entity());
-    if (velComp && velAComp) {
-      const gz::math::Vector3d &vel = velComp->Data();
-      const gz::math::Vector3d &vela = velAComp->Data();
-      gz::math::Vector3d df = vel.Abs() * vel * -10;
-      if (df.X() > 100000 || df.Y() > 100000 || df.Z() > 100000) {
-        df = gz::math::Vector3d::Zero;
-      }
-      gz::math::Vector3d dft = vela.Abs() * vela * -1;
-      link_.AddWorldWrench(ecm, df, dft);
+    // auto velComp = ecm.Component<gz::sim::components::LinearVelocity>(link_.Entity());
+    // auto velAComp = ecm.Component<gz::sim::components::AngularVelocity>(link_.Entity());
+    // if (velComp && velAComp) {
+    //   const gz::math::Vector3d &vel = velComp->Data();
+    //   const gz::math::Vector3d &vela = velAComp->Data();
+    //   gz::math::Vector3d df = vel.Abs() * vel * -10;
+    //   if (df.X() > 100000 || df.Y() > 100000 || df.Z() > 100000) {
+    //     df = gz::math::Vector3d::Zero;
+    //   }
+    //   gz::math::Vector3d dft = vela.Abs() * vela * -1;
+    //   link_.AddWorldWrench(ecm, df, dft);
 
-      // RCLCPP_INFO(node_->get_logger(), "drag_force: <%.2f, %.2f, %.2f>", df.X(), df.Y(), df.Z());
-      // RCLCPP_INFO(node_->get_logger(), "drag_force_t: <%.2f, %.2f, %.2f>", dft.X(), dft.Y(), dft.Z());
+    //   RCLCPP_INFO(node_->get_logger(), "drag_force: <%.2f, %.2f, %.2f>", df.X(), df.Y(), df.Z());
+    //   RCLCPP_INFO(node_->get_logger(), "drag_force_t: <%.2f, %.2f, %.2f>", dft.X(), dft.Y(), dft.Z());
 
-    }
+    // }
   }
 
   ~WasdBodyWrenchPlugin() override
@@ -224,4 +225,8 @@ GZ_ADD_PLUGIN(auve1::WasdBodyWrenchPlugin,
               auve1::WasdBodyWrenchPlugin::ISystemConfigure,
               auve1::WasdBodyWrenchPlugin::ISystemPreUpdate)
 
+GZ_ADD_PLUGIN_ALIAS(auve1::WasdBodyWrenchPlugin, "auve1::WasdBodyWrenchPlugin")
 GZ_ADD_PLUGIN_ALIAS(auve1::WasdBodyWrenchPlugin, "wasd_body_wrench_plugin")
+
+// add this extra alias so your world/URDF can request it:
+GZ_ADD_PLUGIN_ALIAS(auve1::WasdBodyWrenchPlugin, "wasd_body_thrust_plugin")
