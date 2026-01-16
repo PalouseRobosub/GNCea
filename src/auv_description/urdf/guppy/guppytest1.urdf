@@ -282,6 +282,7 @@
     <origin xyz="0 0 0.05" rpy="0 0 0"/>
   </joint>
 
+<!-- 
   <gazebo>
     <plugin filename="libsimple_buoyancy.so" name="gz::sim::systems::SimpleBuoyancy">
       <link_name>base_link</link_name>
@@ -289,7 +290,7 @@
       <fluid_density>1000.0</fluid_density>
       <volume>0.0141786225</volume>
     </plugin>
-  </gazebo>
+  </gazebo> -->
 
   <!-- <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
@@ -489,7 +490,7 @@
 <link name="camera_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.1"/>
+    <mass value="0"/>
     <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
   </inertial>
 
@@ -576,7 +577,7 @@
 <link name="cam_fl_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.05"/>
+    <mass value="0"/>
     <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
   </inertial>
 
@@ -639,7 +640,7 @@
 <link name="cam_fr_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.05"/>
+    <mass value="0"/>
     <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
   </inertial>
 
@@ -697,7 +698,7 @@
 <link name="cam_rl_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.05"/>
+    <mass value="0"/>
     <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
   </inertial>
 
@@ -754,7 +755,7 @@
 <link name="cam_rr_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.05"/>
+    <mass value="0"/>
     <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
   </inertial>
 
@@ -812,7 +813,7 @@
 <link name="dvl_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.05"/>
+    <mass value="0"/>
     <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
   </inertial>
 
@@ -838,7 +839,7 @@
 <joint name="dvl_joint" type="fixed">
   <parent link="base_link"/>
   <child link="dvl_link"/>
-  <origin xyz="0.0 0.0 -0.20" rpy="0 0 0"/>
+  <origin xyz="0.0 0.0 -0.05" rpy="0 0 0"/>
 </joint>
 <!-- DVL sensor -->
 
@@ -869,9 +870,18 @@
       <minimum_range>0.05</minimum_range>
       <maximum_range>50</maximum_range>
       <resolution>0.0001</resolution>
-      <reference_frame>guppy</reference_frame>
+      <reference_frame>0 0 0 0 0 0</reference_frame>
     </gz:dvl>
   </sensor>
 </gazebo> -->
-
+<gazebo>
+<plugin
+  filename="gz-sim-odometry-publisher-system"
+  name="gz::sim::systems::OdometryPublisher">
+  <odom_topic>/odom</odom_topic>
+  <odom_frame>world</odom_frame>
+  <dimensions>3</dimensions>
+  <publish_tf>true</publish_tf>
+  <robot_base_frame>imu_link</robot_base_frame>
+</plugin></gazebo>
 </robot>

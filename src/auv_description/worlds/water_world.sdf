@@ -25,7 +25,9 @@
     </plugin> 
     
     <!-- Gravity -->
-    <gravity>0 0 -9.81</gravity>
+    <!-- <gravity>0 0 -9.81</gravity> -->
+    <gravity>0 0 0</gravity>
+
 
     <!-- Visual water plane -->
     <model name="water_plane">

@@ -20,7 +20,7 @@
       name="gz::sim::systems::DopplerVelocityLogSystem">
     </plugin>    
 
-    <gravity>0 0 -9.81</gravity>
+    <gravity>0 0 0</gravity>
     <magnetic_field>5.5645e-06 2.28758e-05 -4.23884e-05</magnetic_field>
     <atmosphere type='adiabatic'/>
 
@@ -59,42 +59,6 @@
       <self_collide>false</self_collide>
     </model>
 
-    <!-- Floating cube -->
-    <model name='floater_cube'>
-      <pose>2.3005 0 0.6148 0 0 0</pose>
-      <link name='cube_link'>
-        <inertial>
-          <mass>10</mass>
-          <inertia>
-            <ixx>0.166</ixx>
-            <iyy>0.166</iyy>
-            <izz>0.166</izz>
-          </inertia>
-        </inertial>
-        <collision name='col'>
-          <geometry>
-            <box>
-              <size>1 1 1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name='vis'>
-          <geometry>
-            <box>
-              <size>1 1 1</size>
-            </box>
-          </geometry>
-        </visual>
-      </link>
-      <plugin name='gz::sim::systems::SimpleBuoyancy' filename='libsimple_buoyancy.so'>
-        <link_name>cube_link</link_name>
-        <water_level>0.0</water_level>
-        <fluid_density>1000.0</fluid_density>
-        <volume>1.0</volume>
-      </plugin>
-      <static>false</static>
-      <self_collide>false</self_collide>
-    </model>
 
     <!-- Observer camera -->
     <model name='observer_camera'>
