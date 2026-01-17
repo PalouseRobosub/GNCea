@@ -21,8 +21,8 @@
 
   <link name="base_link">
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 -1.5708"/>
-      <mass value="12.294"/>
+      <origin xyz="0 0 -0.04" rpy="0 0 -1.5708"/>
+      <mass value="20"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -282,15 +282,43 @@
     <origin xyz="0 0 0.05" rpy="0 0 0"/>
   </joint>
 
-<!-- 
   <gazebo>
     <plugin filename="libsimple_buoyancy.so" name="gz::sim::systems::SimpleBuoyancy">
       <link_name>base_link</link_name>
       <water_level>0.0</water_level>
       <fluid_density>1000.0</fluid_density>
-      <volume>0.0141786225</volume>
+      <volume>0.025</volume>
     </plugin>
-  </gazebo> -->
+  </gazebo>
+
+
+  <gazebo>
+<plugin filename="gz-sim-hydrodynamics-system" name="gz::sim::systems::Hydrodynamics">
+  <!-- Target the specific model/link -->
+  <link_name>base_link</link_name>
+    <!-- <damping_on>true</damping_on>
+    <viscous_drag_on>true</viscous_drag_on>
+    <pressure_drag_on>true</pressure_drag_on> -->
+    
+    <!-- Example Coefficients (Linear damping) -->
+    <xU>-30.0</xU>
+    <yV>-30.0</yV>
+    <zW>-30.0</zW>
+    
+    <!-- Quadratic damping (Note: use xUabsU for Gazebo Garden+ ) -->
+    <xUabsU>-10.0</xUabsU>
+    <yVabsV>-10.0</yVabsV>
+    <zWabsW>-10.0</zWabsW>
+
+    <kP>-2.0</kP>
+    <mQ>-2.0</mQ>
+    <nR>-2.0</nR>
+
+    <kPabsP>-2.0</kPabsP>
+    <mQabsQ>-2.0</mQabsQ>
+    <nRabsR>-2.0</nRabsR>
+</plugin>
+</gazebo>
 
   <!-- <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
@@ -314,7 +342,7 @@
       <motor_speed_topic>/sim/motor_forces/m_0</motor_speed_topic>
       <lever>-1 1 0</lever>
       
-      <force_scale>0.01</force_scale>
+      <force_scale>1</force_scale>
       
       <theta>-45</theta>
       <phi>0</phi>
@@ -328,7 +356,7 @@
       <motor_speed_topic>/sim/motor_forces/m_4</motor_speed_topic>
       <lever>0 1 0</lever>
       
-      <force_scale>0.01</force_scale>
+      <force_scale>1</force_scale>
       
       <theta>0</theta>
       <phi>90</phi>
@@ -342,7 +370,7 @@
       
       <lever>1 1 0</lever>
       
-      <force_scale>0.01</force_scale>
+      <force_scale>1</force_scale>
       
       <theta>-135</theta>
       <phi>0</phi>
@@ -356,7 +384,7 @@
       <motor_speed_topic>/sim/motor_forces/m_5</motor_speed_topic>
       <lever>1 0 0</lever>
       
-      <force_scale>0.01</force_scale>
+      <force_scale>1</force_scale>
       
       <theta>0</theta>
       <phi>90</phi>
@@ -370,7 +398,7 @@
       <motor_speed_topic>/sim/motor_forces/m_2</motor_speed_topic>
       <lever>1 -1 0</lever>
       
-      <force_scale>0.01</force_scale>
+      <force_scale>1</force_scale>
       
       <theta>135</theta>
       <phi>0</phi>
@@ -384,7 +412,7 @@
       <motor_speed_topic>/sim/motor_forces/m_6</motor_speed_topic>
       <lever>0 -1 0</lever>
       
-      <force_scale>0.01</force_scale>
+      <force_scale>1</force_scale>
       
       <theta>0</theta>
       <phi>90</phi>
@@ -398,7 +426,7 @@
       <motor_speed_topic>/sim/motor_forces/m_3</motor_speed_topic>
       <lever>-1 -1 0</lever>
       
-      <force_scale>0.01</force_scale>
+      <force_scale>1</force_scale>
       
       <theta>45</theta>
       <phi>0</phi>
@@ -412,7 +440,7 @@
       <motor_speed_topic>/sim/motor_forces/m_7</motor_speed_topic>
       <lever>-1 0 0</lever>
       
-      <force_scale>0.01</force_scale>
+      <force_scale>1</force_scale>
       
       <theta>0</theta>
       <phi>90</phi>
