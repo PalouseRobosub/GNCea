@@ -27,8 +27,8 @@ def _nodes(context):
     with open(model_path, "r") as f:
         urdf_txt = f.read()
 
-    urdf_txt = urdf_txt.replace(f"package://{PKG}/", pkg_share + "/")
-    urdf_txt = urdf_txt.replace(f"model://{PKG}/",   pkg_share + "/")
+    urdf_txt = urdf_txt.replace(f"package://{PKG}/", "file://" + pkg_share + "/")
+    urdf_txt = urdf_txt.replace(f"model://{PKG}/",   "file://" + pkg_share + "/")
 
     ros_home = os.getenv("ROS_HOME", os.path.expanduser("~/.ros"))
     os.makedirs(ros_home, exist_ok=True)
