@@ -330,7 +330,7 @@
   <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <name>m0</name>
+      <motor_name>m0</motor_name>
       <motor_speed_topic>/sim/motor_forces/m_0</motor_speed_topic>
       <lever>-1 1 0</lever>
       <theta>-45</theta>
@@ -340,7 +340,7 @@
   <!-- THRUSTER OFFSET: "0.2903 0 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <name>m4</name>
+      <motor_name>m4</motor_name>
       <motor_speed_topic>/sim/motor_forces/m_4</motor_speed_topic>
       <lever>0 1 0</lever>
       <theta>0</theta>
@@ -350,7 +350,7 @@
   <!-- THRUSTER OFFSET: "0.27819 -0.24536 -0.019025" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <name>m1</name>
+      <motor_name>m1</motor_name>
       <motor_speed_topic>/sim/motor_forces/m_1</motor_speed_topic>
       <lever>1 1 0</lever>
       <theta>-135</theta>
@@ -360,7 +360,7 @@
   <!-- THRUSTER OFFSET: "0 -0.2649 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <name>m5</name>
+      <motor_name>m5</motor_name>
       <motor_speed_topic>/sim/motor_forces/m_5</motor_speed_topic>
       <lever>1 0 0</lever>
       <theta>0</theta>
@@ -370,7 +370,7 @@
   <!-- THRUSTER OFFSET: "-0.27819 -0.24536 -0.019075" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <name>m2</name>
+      <motor_name>m2</motor_name>
       <motor_speed_topic>/sim/motor_forces/m_2</motor_speed_topic>
       <lever>1 -1 0</lever>
       <theta>135</theta>
@@ -380,7 +380,7 @@
   <!-- THRUSTER OFFSET: "-0.2903 0 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <name>m6</name>
+      <motor_name>m6</motor_name>
       <motor_speed_topic>/sim/motor_forces/m_6</motor_speed_topic>
       <lever>0 -1 0</lever>
       <theta>0</theta>
@@ -390,7 +390,7 @@
   <!-- THRUSTER OFFSET: "-0.27819 0.24536 -0.019075" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <name>m6</name>
+      <motor_name>m6</motor_name>
       <motor_speed_topic>/sim/motor_forces/m_3</motor_speed_topic>
       <lever>-1 -1 0</lever>      
       <theta>45</theta>
@@ -400,7 +400,7 @@
   <!-- THRUSTER OFFSET: "0 0.2649 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <name>m7</name>
+      <motor_name>m7</motor_name>
       <motor_speed_topic>/sim/motor_forces/m_7</motor_speed_topic>
       <lever>-1 0 0</lever>
       <theta>0</theta>

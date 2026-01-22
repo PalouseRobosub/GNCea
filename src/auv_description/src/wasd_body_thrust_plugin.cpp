@@ -49,8 +49,8 @@ public:
 
     std::string temp_link = (sdf && sdf->HasElement("link_name")) ?
                             sdf->Get<std::string>("link_name") : "base_link";
-    std::string motor_name = (sdf && sdf->HasElement("name")) ?
-                            sdf->Get<std::string>("name") : "unnamed";
+    std::string motor_name = (sdf && sdf->HasElement("motor_name")) ?
+                            sdf->Get<std::string>("motor_name") : "unnamed";
     motor_speed_topic  = (sdf && sdf->HasElement("motor_speed_topic"))  ? sdf->Get<std::string>("motor_speed_topic")  : "/motor_speed";
 
 
