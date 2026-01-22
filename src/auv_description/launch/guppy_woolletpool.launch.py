@@ -49,21 +49,21 @@ def _nodes(context):
             package="joint_state_publisher_gui",
             executable="joint_state_publisher_gui",
             name="joint_state_publisher_gui",
-            output="screen",
+            output="log",
         ))
     else:
         nodes.append(Node(
             package="joint_state_publisher",
             executable="joint_state_publisher",
             name="joint_state_publisher",
-            output="screen",
+            output="log",
         ))
 
     nodes.append(Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         name="robot_state_publisher",
-        output="screen",
+        output="log",
         parameters=[{"robot_description": urdf_txt}],
     ))
 
@@ -71,7 +71,7 @@ def _nodes(context):
         package="ros_gz_sim",
         executable="create",
         name="spawn_guppy",
-        output="screen",
+        output="log",
         arguments=["-name", name, "-file", tmp_urdf],
     ))
 
@@ -80,7 +80,7 @@ def _nodes(context):
             package="rviz2",
             executable="rviz2",
             name="rviz2",
-            output="screen",
+            output="log",
             arguments=["-d", rviz_cfg],
         ))
 
