@@ -36,7 +36,7 @@
   <link name="thruster0C_link">
     <inertial>
       <origin xyz="-0.006048 0 -0.00061572" rpy="0 0 0"/>
-      <mass value="0.17277"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -63,7 +63,7 @@
   <link name="thruster0M_link">
     <inertial>
       <origin xyz="-0.0060486 0 -0.0006157" rpy="0 0 0"/>
-      <mass value="0.17279"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -90,7 +90,7 @@
   <link name="thruster1C_link">
     <inertial>
       <origin xyz="-0.006048 0 -0.00061572" rpy="0 0 0"/>
-      <mass value="0.17277"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -117,7 +117,7 @@
   <link name="thruster1M_link">
     <inertial>
       <origin xyz="-0.0060486 0 -0.0006157" rpy="0 0 0"/>
-      <mass value="0.17279"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -144,7 +144,7 @@
   <link name="thruster2C_link">
     <inertial>
       <origin xyz="-0.006048 0 -0.00061575" rpy="0 0 0"/>
-      <mass value="0.17277"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -171,7 +171,7 @@
   <link name="thruster2M_link">
     <inertial>
       <origin xyz="-0.0060486 0 -0.0006157" rpy="0 0 0"/>
-      <mass value="0.17279"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -198,7 +198,7 @@
   <link name="thruster3C_link">
     <inertial>
       <origin xyz="-0.006048 0 -0.00061572" rpy="0 0 0"/>
-      <mass value="0.17277"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -225,7 +225,7 @@
   <link name="thruster3M_link">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.17277"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -252,7 +252,7 @@
 <link name="imu_link">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.01"/>
+      <mass value="0"/>
       <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
     </inertial>
     <visual>
