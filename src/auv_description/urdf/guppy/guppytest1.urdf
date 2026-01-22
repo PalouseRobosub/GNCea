@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
-     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
-     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="guppytest1" xmlns:gz="http://gazebosim.org/schema">
-  
 
-
-  <gazebo>
-  <disableFixedJointLumping>true</disableFixedJointLumping>
-  </gazebo>
+  <gazebo><disableFixedJointLumping>true</disableFixedJointLumping></gazebo>
 
   <!-- Global material: opaque red -->
   <material name="opaque_red">
@@ -337,13 +330,9 @@
   <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      
-      
+      <name>m0</name>
       <motor_speed_topic>/sim/motor_forces/m_0</motor_speed_topic>
       <lever>-1 1 0</lever>
-      
-      <force_scale>1</force_scale>
-      
       <theta>-45</theta>
       <phi>0</phi>
     </plugin>
@@ -351,13 +340,9 @@
   <!-- THRUSTER OFFSET: "0.2903 0 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      
-      
+      <name>m4</name>
       <motor_speed_topic>/sim/motor_forces/m_4</motor_speed_topic>
       <lever>0 1 0</lever>
-      
-      <force_scale>1</force_scale>
-      
       <theta>0</theta>
       <phi>90</phi>
     </plugin>
@@ -365,13 +350,9 @@
   <!-- THRUSTER OFFSET: "0.27819 -0.24536 -0.019025" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      
+      <name>m1</name>
       <motor_speed_topic>/sim/motor_forces/m_1</motor_speed_topic>
-      
       <lever>1 1 0</lever>
-      
-      <force_scale>1</force_scale>
-      
       <theta>-135</theta>
       <phi>0</phi>
     </plugin>
@@ -379,13 +360,9 @@
   <!-- THRUSTER OFFSET: "0 -0.2649 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      
-      
+      <name>m5</name>
       <motor_speed_topic>/sim/motor_forces/m_5</motor_speed_topic>
       <lever>1 0 0</lever>
-      
-      <force_scale>1</force_scale>
-      
       <theta>0</theta>
       <phi>90</phi>
     </plugin>
@@ -393,13 +370,9 @@
   <!-- THRUSTER OFFSET: "-0.27819 -0.24536 -0.019075" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      
-      
+      <name>m2</name>
       <motor_speed_topic>/sim/motor_forces/m_2</motor_speed_topic>
       <lever>1 -1 0</lever>
-      
-      <force_scale>1</force_scale>
-      
       <theta>135</theta>
       <phi>0</phi>
     </plugin>
@@ -407,13 +380,9 @@
   <!-- THRUSTER OFFSET: "-0.2903 0 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      
-      
+      <name>m6</name>
       <motor_speed_topic>/sim/motor_forces/m_6</motor_speed_topic>
       <lever>0 -1 0</lever>
-      
-      <force_scale>1</force_scale>
-      
       <theta>0</theta>
       <phi>90</phi>
     </plugin>
@@ -421,13 +390,9 @@
   <!-- THRUSTER OFFSET: "-0.27819 0.24536 -0.019075" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      
-      
+      <name>m6</name>
       <motor_speed_topic>/sim/motor_forces/m_3</motor_speed_topic>
-      <lever>-1 -1 0</lever>
-      
-      <force_scale>1</force_scale>
-      
+      <lever>-1 -1 0</lever>      
       <theta>45</theta>
       <phi>0</phi>
     </plugin>
@@ -435,13 +400,9 @@
   <!-- THRUSTER OFFSET: "0 0.2649 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      
-      
+      <name>m7</name>
       <motor_speed_topic>/sim/motor_forces/m_7</motor_speed_topic>
       <lever>-1 0 0</lever>
-      
-      <force_scale>1</force_scale>
-      
       <theta>0</theta>
       <phi>90</phi>
     </plugin>

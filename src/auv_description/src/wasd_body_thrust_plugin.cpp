@@ -49,10 +49,12 @@ public:
 
     std::string temp_link = (sdf && sdf->HasElement("link_name")) ?
                             sdf->Get<std::string>("link_name") : "base_link";
+    std::string motor_name = (sdf && sdf->HasElement("name")) ?
+                            sdf->Get<std::string>("name") : "unnamed";
     motor_speed_topic  = (sdf && sdf->HasElement("motor_speed_topic"))  ? sdf->Get<std::string>("motor_speed_topic")  : "/motor_speed";
 
 
-    node_ = std::make_shared<rclcpp::Node>(("wasd_body_wrench_plugin_" + temp_link ).c_str());
+    node_ = std::make_shared<rclcpp::Node>(("thruster_plugin_" + motor_name).c_str());
     clock_type_ = node_->get_clock()->get_clock_type();
     last_force_time_  = rclcpp::Time(0, 0, clock_type_);
     last_torque_time_ = rclcpp::Time(0, 0, clock_type_);
@@ -68,7 +70,7 @@ public:
 
     link_name_ = temp_link;
 
-    force_scale_  = (sdf && sdf->HasElement("force_scale"))  ? sdf->Get<double>("force_scale")  : 1.0;
+    force_scale_  = 1.0;
     theta  = (sdf && sdf->HasElement("theta"))  ? sdf->Get<double>("theta")  : 0.0;
     phi = (sdf && sdf->HasElement("phi")) ? sdf->Get<double>("phi") : 0.0;
 
@@ -98,7 +100,7 @@ public:
         double x = speed * sinf(p) * sinf(t);
         double z = speed * cosf(p);
 
-        // RCLCPP_INFO(node_->get_logger(), "%s speed: <%.2f, %.2f, %.2f>", motor_speed_topic.c_str(), x, y, z);
+        // RCLCPP_DEBUG(node_->get_logger(), "%s speed: <%.2f, %.2f, %.2f>", motor_speed_topic.c_str(), x, y, z);
 
         cmd_force_body_.Set(x * force_scale_, y * force_scale_, z * force_scale_);
         last_force_time_ = node_->now();
@@ -159,25 +161,6 @@ public:
 
     // Apply the combined wrench on this link
     link_.AddWorldWrench(ecm, f_world, tau_world + tau_lever);
-
-    // link_.AddWorldForce(ecm, f_world);
-
-    // auto velComp = ecm.Component<gz::sim::components::LinearVelocity>(link_.Entity());
-    // auto velAComp = ecm.Component<gz::sim::components::AngularVelocity>(link_.Entity());
-    // if (velComp && velAComp) {
-    //   const gz::math::Vector3d &vel = velComp->Data();
-    //   const gz::math::Vector3d &vela = velAComp->Data();
-    //   gz::math::Vector3d df = vel.Abs() * vel * -10;
-    //   if (df.X() > 100000 || df.Y() > 100000 || df.Z() > 100000) {
-    //     df = gz::math::Vector3d::Zero;
-    //   }
-    //   gz::math::Vector3d dft = vela.Abs() * vela * -1;
-    //   link_.AddWorldWrench(ecm, df, dft);
-
-    //   RCLCPP_INFO(node_->get_logger(), "drag_force: <%.2f, %.2f, %.2f>", df.X(), df.Y(), df.Z());
-    //   RCLCPP_INFO(node_->get_logger(), "drag_force_t: <%.2f, %.2f, %.2f>", dft.X(), dft.Y(), dft.Z());
-
-    // }
   }
 
   ~WasdBodyWrenchPlugin() override
