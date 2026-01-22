@@ -294,22 +294,22 @@
     <pressure_drag_on>true</pressure_drag_on> -->
     
     <!-- Example Coefficients (Linear damping) -->
-    <xU>-30.0</xU>
-    <yV>-30.0</yV>
-    <zW>-30.0</zW>
+    <xU>-10.0</xU>
+    <yV>-10.0</yV>
+    <zW>-10.0</zW>
     
     <!-- Quadratic damping (Note: use xUabsU for Gazebo Garden+ ) -->
-    <xUabsU>-10.0</xUabsU>
-    <yVabsV>-10.0</yVabsV>
-    <zWabsW>-10.0</zWabsW>
+    <xUabsU>-3.0</xUabsU>
+    <yVabsV>-3.0</yVabsV>
+    <zWabsW>-3.0</zWabsW>
 
-    <kP>-2.0</kP>
-    <mQ>-2.0</mQ>
-    <nR>-2.0</nR>
+    <kP>-1.0</kP>
+    <mQ>-1.0</mQ>
+    <nR>-1.0</nR>
 
-    <kPabsP>-2.0</kPabsP>
-    <mQabsQ>-2.0</mQabsQ>
-    <nRabsR>-2.0</nRabsR>
+    <kPabsP>-0.0</kPabsP>
+    <mQabsQ>-0.0</mQabsQ>
+    <nRabsR>-0.0</nRabsR>
 </plugin>
 </gazebo>
 
