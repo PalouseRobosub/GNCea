@@ -25,8 +25,8 @@ def _nodes(context):
     with open(model_path, "r") as f:
         urdf_txt = f.read()
 
-    urdf_txt = urdf_txt.replace("package://{}/".format(PKG), pkg_share + "/")
-    urdf_txt = urdf_txt.replace("model://{}/".format(PKG),   pkg_share + "/")
+    urdf_txt = urdf_txt.replace("package://{}/".format(PKG), "file://" + pkg_share + "/")
+    urdf_txt = urdf_txt.replace("model://{}/".format(PKG),   "file://" + pkg_share + "/")
 
     ros_home = os.getenv("ROS_HOME", os.path.expanduser("~/.ros"))
     os.makedirs(ros_home, exist_ok=True)
@@ -100,8 +100,8 @@ def generate_launch_description():
         DeclareLaunchArgument("model", default_value=default_model, description="Path to URDF"),
         DeclareLaunchArgument("world", default_value=default_world, description="Path to Gazebo world SDF"),
         DeclareLaunchArgument("name",  default_value="guppy",        description="Entity name in Gazebo"),
-        DeclareLaunchArgument("gui",   default_value="true",         description="Use joint_state_publisher_gui"),
-        DeclareLaunchArgument("rviz",  default_value="true",         description="Launch RViz2"),
+        DeclareLaunchArgument("gui",   default_value="false",         description="Use joint_state_publisher_gui"),
+        DeclareLaunchArgument("rviz",  default_value="false",         description="Launch RViz2"),
         DeclareLaunchArgument("rviz_config", default_value=default_rviz, description="RViz config file"),
         OpaqueFunction(function=_nodes),
     ])

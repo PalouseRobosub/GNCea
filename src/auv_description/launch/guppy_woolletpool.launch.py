@@ -27,8 +27,8 @@ def _nodes(context):
     with open(model_path, "r") as f:
         urdf_txt = f.read()
 
-    urdf_txt = urdf_txt.replace(f"package://{PKG}/", pkg_share + "/")
-    urdf_txt = urdf_txt.replace(f"model://{PKG}/",   pkg_share + "/")
+    urdf_txt = urdf_txt.replace(f"package://{PKG}/", "file://" + pkg_share + "/")
+    urdf_txt = urdf_txt.replace(f"model://{PKG}/",   "file://" + pkg_share + "/")
 
     ros_home = os.getenv("ROS_HOME", os.path.expanduser("~/.ros"))
     os.makedirs(ros_home, exist_ok=True)
@@ -49,21 +49,21 @@ def _nodes(context):
             package="joint_state_publisher_gui",
             executable="joint_state_publisher_gui",
             name="joint_state_publisher_gui",
-            output="screen",
+            output="log",
         ))
     else:
         nodes.append(Node(
             package="joint_state_publisher",
             executable="joint_state_publisher",
             name="joint_state_publisher",
-            output="screen",
+            output="log",
         ))
 
     nodes.append(Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         name="robot_state_publisher",
-        output="screen",
+        output="log",
         parameters=[{"robot_description": urdf_txt}],
     ))
 
@@ -71,7 +71,7 @@ def _nodes(context):
         package="ros_gz_sim",
         executable="create",
         name="spawn_guppy",
-        output="screen",
+        output="log",
         arguments=["-name", name, "-file", tmp_urdf],
     ))
 
@@ -80,7 +80,7 @@ def _nodes(context):
             package="rviz2",
             executable="rviz2",
             name="rviz2",
-            output="screen",
+            output="log",
             arguments=["-d", rviz_cfg],
         ))
 
@@ -140,8 +140,8 @@ def generate_launch_description():
         DeclareLaunchArgument("model", default_value=default_model, description="Path to URDF"),
         DeclareLaunchArgument("world", default_value=default_world, description="Path to Gazebo world SDF"),
         DeclareLaunchArgument("name",  default_value="guppy",        description="Entity name in Gazebo"),
-        DeclareLaunchArgument("gui",   default_value="true",         description="Use joint_state_publisher_gui"),
-        DeclareLaunchArgument("rviz",  default_value="true",         description="Launch RViz2"),
+        DeclareLaunchArgument("gui",   default_value="false",         description="Use joint_state_publisher_gui"),
+        DeclareLaunchArgument("rviz",  default_value="false",         description="Launch RViz2"),
         DeclareLaunchArgument("rviz_config", default_value=default_rviz, description="RViz config file"),
         OpaqueFunction(function=_nodes),
     ])

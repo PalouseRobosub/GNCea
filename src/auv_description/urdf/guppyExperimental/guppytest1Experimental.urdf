@@ -282,14 +282,14 @@
   </joint>
   
 
-  <!-- <gazebo>
+  <gazebo>
     <plugin filename="libsimple_buoyancy.so" name="gz::sim::systems::SimpleBuoyancy">
       <link_name>base_link</link_name>
       <water_level>0.0</water_level>
       <fluid_density>1000.0</fluid_density>
-      <volume>0.0141786225</volume>
+      <volume>1.5</volume>
     </plugin>
-  </gazebo> -->
+  </gazebo>
 
   <!-- <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
@@ -849,5 +849,17 @@
   </sensor>
 </gazebo>
 
+<!-- HYDRODYNAMICS -->
+<!-- <gazebo>
+  <plugin filename="gz-sim-hydrodynamics-system"
+          name="gz::sim::systems::Hydrodynamics">
+    <link_name>base_link</link_name>
 
+    <hydrodynamics>
+      <damping_on>1</damping_on>
+      <viscous_drag_on>1</viscous_drag_on>
+      <pressure_drag_on>1</pressure_drag_on>
+  </hydrodynamics>
+  </plugin>
+</gazebo> -->
 </robot>

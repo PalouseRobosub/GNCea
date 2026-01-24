@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
-     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
-     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="guppytest1" xmlns:gz="http://gazebosim.org/schema">
-  
 
-
-  <gazebo>
-  <disableFixedJointLumping>true</disableFixedJointLumping>
-  </gazebo>
+  <gazebo><disableFixedJointLumping>true</disableFixedJointLumping></gazebo>
 
   <!-- Global material: opaque red -->
   <material name="opaque_red">
@@ -21,8 +14,8 @@
 
   <link name="base_link">
     <inertial>
-      <origin xyz="5.0383E-06 0.042158 0.00054643" rpy="0 0 -1.5708"/>
-      <mass value="12.294"/>
+      <origin xyz="0 0 -0.04" rpy="0 0 -1.5708"/>
+      <mass value="20"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -42,8 +35,8 @@
 
   <link name="thruster0C_link">
     <inertial>
-      <origin xyz="-0.006048 6.5742E-06 -0.00061572" rpy="0 0 0"/>
-      <mass value="0.17277"/>
+      <origin xyz="-0.006048 0 -0.00061572" rpy="0 0 0"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -69,8 +62,8 @@
 
   <link name="thruster0M_link">
     <inertial>
-      <origin xyz="-0.0060486 6.6279E-06 -0.0006157" rpy="0 0 0"/>
-      <mass value="0.17279"/>
+      <origin xyz="-0.0060486 0 -0.0006157" rpy="0 0 0"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -89,15 +82,15 @@
   </link>
 
   <joint name="thruster0M_joint" type="fixed">
-    <origin xyz="0.2903 -2.5E-05 -0.013798" rpy="1.5708 1.5708 -1.5708"/>
+    <origin xyz="0.2903 0 -0.013798" rpy="1.5708 1.5708 -1.5708"/>
     <parent link="base_link"/>
     <child link="thruster0M_link"/>
   </joint>
 
   <link name="thruster1C_link">
     <inertial>
-      <origin xyz="-0.006048 6.5742E-06 -0.00061572" rpy="0 0 0"/>
-      <mass value="0.17277"/>
+      <origin xyz="-0.006048 0 -0.00061572" rpy="0 0 0"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -123,8 +116,8 @@
 
   <link name="thruster1M_link">
     <inertial>
-      <origin xyz="-0.0060486 6.628E-06 -0.0006157" rpy="0 0 0"/>
-      <mass value="0.17279"/>
+      <origin xyz="-0.0060486 0 -0.0006157" rpy="0 0 0"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -143,15 +136,15 @@
   </link>
 
   <joint name="thruster1M_joint" type="fixed">
-    <origin xyz="-2.5E-05 -0.2649 -0.013798" rpy="0 1.5708 -1.5708"/>
+    <origin xyz="0 -0.2649 -0.013798" rpy="0 1.5708 -1.5708"/>
     <parent link="base_link"/>
     <child link="thruster1M_link"/>
   </joint>
 
   <link name="thruster2C_link">
     <inertial>
-      <origin xyz="-0.006048 6.6362E-06 -0.00061575" rpy="0 0 0"/>
-      <mass value="0.17277"/>
+      <origin xyz="-0.006048 0 -0.00061575" rpy="0 0 0"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -177,8 +170,8 @@
 
   <link name="thruster2M_link">
     <inertial>
-      <origin xyz="-0.0060486 6.628E-06 -0.0006157" rpy="0 0 0"/>
-      <mass value="0.17279"/>
+      <origin xyz="-0.0060486 0 -0.0006157" rpy="0 0 0"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -197,15 +190,15 @@
   </link>
 
   <joint name="thruster2M_joint" type="fixed">
-    <origin xyz="-0.2903 2.5E-05 -0.013798" rpy="1.5708 1.5708 -1.5708"/>
+    <origin xyz="-0.2903 0 -0.013798" rpy="1.5708 1.5708 -1.5708"/>
     <parent link="base_link"/>
     <child link="thruster2M_link"/>
   </joint>
 
   <link name="thruster3C_link">
     <inertial>
-      <origin xyz="-0.006048 6.5742E-06 -0.00061572" rpy="0 0 0"/>
-      <mass value="0.17277"/>
+      <origin xyz="-0.006048 0 -0.00061572" rpy="0 0 0"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -232,7 +225,7 @@
   <link name="thruster3M_link">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.17277"/>
+      <mass value="0"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
@@ -251,9 +244,35 @@
   </link>
 
   <joint name="thruster3M_joint" type="fixed">
-    <origin xyz="2.5E-05 0.2649 -0.013798" rpy="3.1416 1.5708 -1.5708"/>
+    <origin xyz="0 0.2649 -0.013798" rpy="3.1416 1.5708 -1.5708"/>
     <parent link="base_link"/>
     <child link="thruster3M_link"/>
+  </joint>
+
+<link name="imu_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
   </joint>
 
   <gazebo>
@@ -261,9 +280,38 @@
       <link_name>base_link</link_name>
       <water_level>0.0</water_level>
       <fluid_density>1000.0</fluid_density>
-      <volume>0.0141786225</volume>
+      <volume>0.025</volume>
     </plugin>
   </gazebo>
+
+
+  <gazebo>
+<plugin filename="gz-sim-hydrodynamics-system" name="gz::sim::systems::Hydrodynamics">
+  <!-- Target the specific model/link -->
+  <link_name>base_link</link_name>
+    <!-- <damping_on>true</damping_on>
+    <viscous_drag_on>true</viscous_drag_on>
+    <pressure_drag_on>true</pressure_drag_on> -->
+    
+    <!-- Example Coefficients (Linear damping) -->
+    <xU>-10.0</xU>
+    <yV>-10.0</yV>
+    <zW>-10.0</zW>
+    
+    <!-- Quadratic damping (Note: use xUabsU for Gazebo Garden+ ) -->
+    <xUabsU>-3.0</xUabsU>
+    <yVabsV>-3.0</yVabsV>
+    <zWabsW>-3.0</zWabsW>
+
+    <kP>-1.0</kP>
+    <mQ>-1.0</mQ>
+    <nR>-1.0</nR>
+
+    <kPabsP>-0.0</kPabsP>
+    <mQabsQ>-0.0</mQabsQ>
+    <nRabsR>-0.0</nRabsR>
+</plugin>
+</gazebo>
 
   <!-- <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
@@ -277,93 +325,86 @@
   </gazebo> -->
 
   <!-- Per-thruster plugins -->
+  <!-- Per-thruster plugins -->
   <!-- THRUSTER OFFSET: "0.27819 0.24536 -0.019075" -->
   <gazebo>
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t0C/force</force_topic>
-      <torque_topic>/guppy/thrusters/t0C/torque</torque_topic>
-      <lever>0.27819 0.24536 -0.019075</lever>
-      <hold_ms>-1</hold_ms>
-      <force_scale>1.0</force_scale>
-      <torque_scale>1.0</torque_scale>
+      <motor_name>m0</motor_name>
+      <motor_speed_topic>/sim/motor_forces/m_0</motor_speed_topic>
+      <lever>-1 1 0</lever>
+      <theta>-45</theta>
+      <phi>0</phi>
     </plugin>
 
-  <!-- THRUSTER OFFSET: "0.2903 -2.5E-05 -0.013798" -->
+  <!-- THRUSTER OFFSET: "0.2903 0 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t0M/force</force_topic>
-      <torque_topic>/guppy/thrusters/t0M/torque</torque_topic>
-      <lever>0.2903 -2.5E-05 -0.013798</lever>
-      <hold_ms>-1</hold_ms>
-      <force_scale>1.0</force_scale>
-      <torque_scale>1.0</torque_scale>
+      <motor_name>m4</motor_name>
+      <motor_speed_topic>/sim/motor_forces/m_4</motor_speed_topic>
+      <lever>0 1 0</lever>
+      <theta>0</theta>
+      <phi>90</phi>
     </plugin>
 
   <!-- THRUSTER OFFSET: "0.27819 -0.24536 -0.019025" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t1C/force</force_topic>
-      <torque_topic>/guppy/thrusters/t1C/torque</torque_topic>
-      <lever>0.27819 -0.24536 -0.019025</lever>
-      <hold_ms>-1</hold_ms>
-      <force_scale>1.0</force_scale>
-      <torque_scale>1.0</torque_scale>
+      <motor_name>m1</motor_name>
+      <motor_speed_topic>/sim/motor_forces/m_1</motor_speed_topic>
+      <lever>1 1 0</lever>
+      <theta>-135</theta>
+      <phi>0</phi>
     </plugin>
 
-  <!-- THRUSTER OFFSET: "-2.5E-05 -0.2649 -0.013798" -->
+  <!-- THRUSTER OFFSET: "0 -0.2649 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t1M/force</force_topic>
-      <torque_topic>/guppy/thrusters/t1M/torque</torque_topic>
-      <lever>-2.5E-05 -0.2649 -0.013798</lever>
-      <hold_ms>-1</hold_ms>
-      <force_scale>1.0</force_scale>
-      <torque_scale>1.0</torque_scale>
+      <motor_name>m5</motor_name>
+      <motor_speed_topic>/sim/motor_forces/m_5</motor_speed_topic>
+      <lever>1 0 0</lever>
+      <theta>0</theta>
+      <phi>90</phi>
     </plugin>
 
   <!-- THRUSTER OFFSET: "-0.27819 -0.24536 -0.019075" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t2C/force</force_topic>
-      <torque_topic>/guppy/thrusters/t2C/torque</torque_topic>
-      <lever>-0.27819 -0.24536 -0.019075</lever>
-      <hold_ms>-1</hold_ms>
-      <force_scale>1.0</force_scale>
-      <torque_scale>1.0</torque_scale>
+      <motor_name>m2</motor_name>
+      <motor_speed_topic>/sim/motor_forces/m_2</motor_speed_topic>
+      <lever>1 -1 0</lever>
+      <theta>135</theta>
+      <phi>0</phi>
     </plugin>
 
-  <!-- THRUSTER OFFSET: "-0.2903 2.5E-05 -0.013798" -->
+  <!-- THRUSTER OFFSET: "-0.2903 0 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t2M/force</force_topic>
-      <torque_topic>/guppy/thrusters/t2M/torque</torque_topic>
-      <lever>-0.2903 2.5E-05 -0.013798</lever>
-      <hold_ms>-1</hold_ms>
-      <force_scale>1.0</force_scale>
-      <torque_scale>1.0</torque_scale>
+      <motor_name>m6</motor_name>
+      <motor_speed_topic>/sim/motor_forces/m_6</motor_speed_topic>
+      <lever>0 -1 0</lever>
+      <theta>0</theta>
+      <phi>90</phi>
     </plugin>
 
   <!-- THRUSTER OFFSET: "-0.27819 0.24536 -0.019075" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t3C/force</force_topic>
-      <torque_topic>/guppy/thrusters/t3C/torque</torque_topic>
-      <lever>-0.27819 0.24536 -0.019075</lever>
-      <hold_ms>-1</hold_ms>
-      <force_scale>1.0</force_scale>
-      <torque_scale>1.0</torque_scale>
+      <motor_name>m6</motor_name>
+      <motor_speed_topic>/sim/motor_forces/m_3</motor_speed_topic>
+      <lever>-1 -1 0</lever>      
+      <theta>45</theta>
+      <phi>0</phi>
     </plugin>
 
-  <!-- THRUSTER OFFSET: "2.5E-05 0.2649 -0.013798" -->
+  <!-- THRUSTER OFFSET: "0 0.2649 -0.013798" -->
     <plugin name="wasd_body_thrust_plugin" filename="libwasd_body_thrust_plugin.so">
       <link_name>base_link</link_name>
-      <force_topic>/guppy/thrusters/t3M/force</force_topic>
-      <torque_topic>/guppy/thrusters/t3M/torque</torque_topic>
-      <lever>2.5E-05 0.2649 -0.013798</lever>
-      <hold_ms>-1</hold_ms>
-      <force_scale>1.0</force_scale>
-      <torque_scale>1.0</torque_scale>
+      <motor_name>m7</motor_name>
+      <motor_speed_topic>/sim/motor_forces/m_7</motor_speed_topic>
+      <lever>-1 0 0</lever>
+      <theta>0</theta>
+      <phi>90</phi>
     </plugin>
   </gazebo>
 
@@ -438,7 +479,7 @@
 <link name="camera_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.1"/>
+    <mass value="0"/>
     <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
   </inertial>
 
@@ -525,7 +566,7 @@
 <link name="cam_fl_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.05"/>
+    <mass value="0"/>
     <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
   </inertial>
 
@@ -588,7 +629,7 @@
 <link name="cam_fr_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.05"/>
+    <mass value="0"/>
     <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
   </inertial>
 
@@ -646,7 +687,7 @@
 <link name="cam_rl_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.05"/>
+    <mass value="0"/>
     <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
   </inertial>
 
@@ -703,7 +744,7 @@
 <link name="cam_rr_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.05"/>
+    <mass value="0"/>
     <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
   </inertial>
 
@@ -761,8 +802,8 @@
 <link name="dvl_link">
   <inertial>
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="0.05"/>
-    <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+    <mass value="0"/>
+    <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
   </inertial>
 
   <visual>
@@ -787,12 +828,12 @@
 <joint name="dvl_joint" type="fixed">
   <parent link="base_link"/>
   <child link="dvl_link"/>
-  <origin xyz="0.0 0.0 -0.20" rpy="0 0 0"/>
+  <origin xyz="0.0 0.0 -0.05" rpy="0 0 0"/>
 </joint>
 <!-- DVL sensor -->
 
 
-<gazebo reference="dvl_link">
+<!-- <gazebo reference="dvl_link">
   <sensor name="dvl" type="custom" gz:type="dvl">
     <always_on>true</always_on>
     <update_rate>10</update_rate>
@@ -818,11 +859,18 @@
       <minimum_range>0.05</minimum_range>
       <maximum_range>50</maximum_range>
       <resolution>0.0001</resolution>
-      <reference_frame>dvl_link</reference_frame>
+      <reference_frame>0 0 0 0 0 0</reference_frame>
     </gz:dvl>
   </sensor>
-</gazebo>
-
-
-
+</gazebo> -->
+<gazebo>
+<plugin
+  filename="gz-sim-odometry-publisher-system"
+  name="gz::sim::systems::OdometryPublisher">
+  <odom_topic>/odom</odom_topic>
+  <odom_frame>world</odom_frame>
+  <dimensions>3</dimensions>
+  <publish_tf>true</publish_tf>
+  <robot_base_frame>imu_link</robot_base_frame>
+</plugin></gazebo>
 </robot>
