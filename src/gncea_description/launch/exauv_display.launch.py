@@ -31,7 +31,7 @@ def _nodes(context):
 
     ros_home = os.getenv("ROS_HOME", os.path.expanduser("~/.ros"))
     os.makedirs(ros_home, exist_ok=True)
-    tmp_urdf = os.path.join(ros_home, "exgncea_abs.urdf")
+    tmp_urdf = os.path.join(ros_home, "exauv_abs.urdf")
     with open(tmp_urdf, "w") as f:
         f.write(urdf_txt)
 
