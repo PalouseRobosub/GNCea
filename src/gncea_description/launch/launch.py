@@ -138,7 +138,7 @@ def generate_launch_description():
         set_gz_resource_path,
         set_ign_resource_path,
         DeclareLaunchArgument("model", default_value=default_model, description="Path to URDF"),
-        DeclareLaunchArgument("model_package", default_value="gncea_descrption", description="package containing URDF"),
+        DeclareLaunchArgument("model_package", default_value="gncea_description", description="package containing URDF"),
         DeclareLaunchArgument("world", default_value=default_world, description="Path to Gazebo world SDF"),
         DeclareLaunchArgument("name",  default_value="auv",        description="Entity name in Gazebo"),
         DeclareLaunchArgument("gui",   default_value="false",         description="Use joint_state_publisher_gui"),
