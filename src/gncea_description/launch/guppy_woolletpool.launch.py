@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 import os
 from launch import LaunchDescription
 from launch.actions import (
@@ -11,8 +10,6 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
 
-PKG = "gncea_description"
-
 def _nodes(context):
     # args
     model_path = LaunchConfiguration("model").perform(context)
@@ -22,7 +19,7 @@ def _nodes(context):
     rviz_cfg  = LaunchConfiguration("rviz_config").perform(context)
     name      = LaunchConfiguration("name").perform(context)
 
-    pkg_share = get_package_share_directory(PKG)
+    pkg_share = get_package_share_directory("gncea_description")
 
     with open(model_path, "r") as f:
         urdf_txt = f.read()
