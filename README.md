@@ -132,17 +132,7 @@ ros2 topic pub /shoot_torpedo std_msgs/msg/Bool "data: true"
 
 # GUPPY, AUV for 2026 robosub competition
 
-To launch guppy:
-
-```
-ros2 launch gncea_description guppy_display.launch.py
-```
-
-To launch slider teleoperation:
-
-```
-ros2 run gncea_description guppy_control_test.py
-```
+To launch guppy, follow the instructions in the [Guppy ROS repo](https://github.com/palouserobosub/guppy#readme).
 
 # Experimental Control system environment (Gravity & Buoyancy turned off)
 
