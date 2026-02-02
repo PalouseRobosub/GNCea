@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 import os
 from launch import LaunchDescription
 from launch.actions import (
@@ -10,28 +11,32 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
 
+GNCEA_PKG = "gncea_description"
+
 def _nodes(context):
     # args
     model_path = LaunchConfiguration("model").perform(context)
+    model_package = LaunchConfiguration("model_package").perform(context)
     world_path = LaunchConfiguration("world").perform(context)
     use_gui   = LaunchConfiguration("gui").perform(context).lower() in ("1","true","yes")
     use_rviz  = LaunchConfiguration("rviz").perform(context).lower() in ("1","true","yes")
     rviz_cfg  = LaunchConfiguration("rviz_config").perform(context)
     name      = LaunchConfiguration("name").perform(context)
 
-    pkg_share = get_package_share_directory("gncea_description")
+    gncea_pkg_share = get_package_share_directory(GNCEA_PKG)
+    urdf_pkg_share = get_package_share_directory(model_package)
 
     with open(model_path, "r") as f:
         urdf_txt = f.read()
 
-    urdf_txt = urdf_txt.replace(f"package://{PKG}/", "file://" + pkg_share + "/")
-    urdf_txt = urdf_txt.replace(f"model://{PKG}/",   "file://" + pkg_share + "/")
+    urdf_txt = urdf_txt.replace(f"package://{model_package}/", "file://" + urdf_pkg_share + "/")
+    urdf_txt = urdf_txt.replace(f"model://{model_package}/",   "file://" + urdf_pkg_share + "/")
 
-    ros_home = os.getenv("ROS_HOME", os.path.expanduser("~/.ros"))
-    os.makedirs(ros_home, exist_ok=True)
-    tmp_urdf = os.path.join(ros_home, "guppy_abs.urdf")
-    with open(tmp_urdf, "w") as f:
-        f.write(urdf_txt)
+    # ros_home = os.getenv("ROS_HOME", os.path.expanduser("~/.ros"))
+    # os.makedirs(ros_home, exist_ok=True)
+    # tmp_urdf = os.path.join(ros_home, "guppy_abs.urdf")
+    # with open(tmp_urdf, "w") as f:
+    #     f.write(urdf_txt)
 
     nodes = []
 
@@ -84,19 +89,17 @@ def _nodes(context):
     return nodes
 
 def generate_launch_description():
-    pkg_share = get_package_share_directory(PKG)
+    gncea_pkg_share = get_package_share_directory(GNCEA_PKG)
 
-    default_model = os.path.join(pkg_share, "urdf", "guppy", "guppytest1.urdf")
-    default_world = os.path.join(pkg_share, "worlds", "woolletPool_world.sdf")
-    default_rviz  = os.path.join(pkg_share, "rviz", "view_lidar.rviz")
+    default_model = os.path.join(gncea_pkg_share, "urdf", "cube", "auv.urdf")
+    default_world = os.path.join(gncea_pkg_share, "worlds", "woolletPool_world.sdf")
+    default_rviz  = os.path.join(gncea_pkg_share, "rviz", "view_lidar.rviz")
 
-    sim_models_install = os.path.join(pkg_share, "worldmodels", "Sim-Models")
+    sim_models_install = os.path.join(gncea_pkg_share, "worldmodels", "Sim-Models")
     sim_models_src = os.path.join(
-        os.path.dirname(pkg_share).replace("install", "src"),
+        os.path.dirname(gncea_pkg_share).replace("install", "src"),
         "gncea_description", "worldmodels", "Sim-Models"
     )
-
-
     gazebo_model_path = ":".join([
         sim_models_src,
         sim_models_install,
@@ -106,14 +109,14 @@ def generate_launch_description():
     gz_resource_path = ":".join([
         sim_models_src,
         sim_models_install,
-        pkg_share,
+        gncea_pkg_share,
         os.environ.get("GZ_SIM_RESOURCE_PATH", "")
     ])
 
     ign_resource_path = ":".join([
         sim_models_src,
         sim_models_install,
-        pkg_share,
+        gncea_pkg_share,
         os.environ.get("IGN_GAZEBO_RESOURCE_PATH", "")
     ])
 
@@ -135,8 +138,9 @@ def generate_launch_description():
         set_gz_resource_path,
         set_ign_resource_path,
         DeclareLaunchArgument("model", default_value=default_model, description="Path to URDF"),
+        DeclareLaunchArgument("model_package", default_value="gncea_descrption", description="package containing URDF"),
         DeclareLaunchArgument("world", default_value=default_world, description="Path to Gazebo world SDF"),
-        DeclareLaunchArgument("name",  default_value="guppy",        description="Entity name in Gazebo"),
+        DeclareLaunchArgument("name",  default_value="auv",        description="Entity name in Gazebo"),
         DeclareLaunchArgument("gui",   default_value="false",         description="Use joint_state_publisher_gui"),
         DeclareLaunchArgument("rviz",  default_value="false",         description="Launch RViz2"),
         DeclareLaunchArgument("rviz_config", default_value=default_rviz, description="RViz config file"),
