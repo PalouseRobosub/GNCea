@@ -50,22 +50,34 @@ source install/setup.bash
 
 Use whatever commands below to launch any desired launch file.
 
+# Main Launch File
+Here is an example launch file for a seperate project, that uses the `launch.py` file of GNCea:
+```xml
+<launch>
+    <include file="$(find-pkg-share gncea_description)/launch/launch.py">
+        <arg name="model" value="$(find-pkg-share guppy_description)/urdf/guppy.urdf"/>
+        <arg name="model_package" value="guppy_description"/>
+        <arg name="name" value="guppy"/>
+    </include>
+</launch>
+```
+
 # cube.urdf, an example AUV plugin implementation that is simple, not parameterized
 
 To launch
 
 ```
-ros2 launch auv_description cube_thrust_test.launch.py
+ros2 launch gncea_description cube_thrust_test.launch.py
 ```
 
 ```
-ros2 launch auv_description cube_thrust_test_water.launch.py
+ros2 launch gncea_description cube_thrust_test_water.launch.py
 ```
 
 To activate teleoperation
 
 ```
-ros2 run auv_description wasd_teleop.py   --ros-args -p topic:=/auve1/force_body -p force:=50.0 -p decay:=1.0 -p rate_hz:=500000000.0
+ros2 run gncea_description wasd_teleop.py   --ros-args -p topic:=/auve1/force_body -p force:=50.0 -p decay:=1.0 -p rate_hz:=500000000.0
 ```
 
 force, decay and rate_hz can be edited as you see fit, just change the number in the teleop launch command.
@@ -73,11 +85,11 @@ force, decay and rate_hz can be edited as you see fit, just change the number in
 Some commands I used to test stuff out:
 
 ```
-ros2 run auv_description wasd_teleop.py   --ros-args     -p force_topic:=/auve1/force_body     -p force:=100.0     -p decay:=1.0     -p rate_hz:=12000000000.0 -p torque:=1.0
+ros2 run gncea_description wasd_teleop.py   --ros-args     -p force_topic:=/auve1/force_body     -p force:=100.0     -p decay:=1.0     -p rate_hz:=12000000000.0 -p torque:=1.0
 ```
 
 ```
-ros2 run auv_description wasd_teleop.py   --ros-args     -p force_topic:=/auve1/force_body     -p force:=500.0     -p decay:=1.0     -p rate_hz:=1200000000.0
+ros2 run gncea_description wasd_teleop.py   --ros-args     -p force_topic:=/auve1/force_body     -p force:=500.0     -p decay:=1.0     -p rate_hz:=1200000000.0
 ```
 
 # auv.urdf, an example AUV plugin implementation that is parameterized
@@ -85,7 +97,7 @@ ros2 run auv_description wasd_teleop.py   --ros-args     -p force_topic:=/auve1/
 To launch auv.urdf
 
 ```
-ros2 launch auv_description testing.launch.py
+ros2 launch gncea_description testing.launch.py
 ```
 
 Activate camera bridge
@@ -105,7 +117,7 @@ Activate teleop using the previous commands
 To test lidar
 
 ```
-ros2 launch auv_description view_lidar.launch.py
+ros2 launch gncea_description view_lidar.launch.py
 ```
 
 Rviz will open up automatically, set fixed frame to auv/cube_link/lidar_link_sensor. Add pointcloud2 by topic, and set topic to scan/points.
@@ -120,30 +132,20 @@ ros2 topic pub /shoot_torpedo std_msgs/msg/Bool "data: true"
 
 # GUPPY, AUV for 2026 robosub competition
 
-To launch guppy:
-
-```
-ros2 launch auv_description guppy_display.launch.py
-```
-
-To launch slider teleoperation:
-
-```
-ros2 run auv_description guppy_control_test.py
-```
+To launch guppy, follow the instructions in the [Guppy ROS repo](https://github.com/palouserobosub/guppy#readme).
 
 # Experimental Control system environment (Gravity & Buoyancy turned off)
 
 To launch experimental control world:
 
 ```
-ros2 launch auv_description controlsystemExperimental.launch.py 
+ros2 launch gncea_description controlsystemExperimental.launch.py 
 ```
 
 To use sliders:
 
 ```
-ros2 run auv_description guppy_control_test.py
+ros2 run gncea_description guppy_control_test.py
 ```
 
 # Woollet Pool world
@@ -151,13 +153,13 @@ ros2 run auv_description guppy_control_test.py
 To launch Woollet pool world:
 
 ```
-ros2 launch auv_description guppy_woolletpool.launch.py 
+ros2 launch gncea_description launch.py
 ```
 
 To use sliders:
 
 ```
-ros2 run auv_description guppy_control_test.py
+ros2 run gncea_description guppy_control_test.py
 ```
 
 # TO ACTIVATE IMU/ALTIMETER ON GUPPY
@@ -222,7 +224,7 @@ https://drive.google.com/file/d/1oP0x0Nx4gbNLD_p_7pBtzQwXXJvDacup/view?usp=shari
 To test autonomy test 2:
 
 ```
-ros2 launch auv_autonomy autonomytest2.py
+ros2 launch gncea_autonomy autonomytest2.py
 ```
 
 ## Contact and Sponsorship
