@@ -33,7 +33,7 @@ def _nodes(context):
     urdf_txt = urdf_txt.replace(f"package://{model_package}/", "file://" + urdf_pkg_share + "/")
     urdf_txt = urdf_txt.replace(f"model://{model_package}/",   "file://" + urdf_pkg_share + "/")
 
-    tmp_urdf = os.path.join(tempfile.TemporaryDirectory(), "guppy_abs.urdf")
+    tmp_urdf = os.path.join(tempfile.TemporaryDirectory().name, "guppy_abs.urdf")
     with open(tmp_urdf, "w") as f:
         f.write(urdf_txt)
 
