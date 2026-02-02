@@ -10,6 +10,7 @@ from launch.substitutions import LaunchConfiguration
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
+import tempfile
 
 GNCEA_PKG = "gncea_description"
 
@@ -32,11 +33,9 @@ def _nodes(context):
     urdf_txt = urdf_txt.replace(f"package://{model_package}/", "file://" + urdf_pkg_share + "/")
     urdf_txt = urdf_txt.replace(f"model://{model_package}/",   "file://" + urdf_pkg_share + "/")
 
-    # ros_home = os.getenv("ROS_HOME", os.path.expanduser("~/.ros"))
-    # os.makedirs(ros_home, exist_ok=True)
-    # tmp_urdf = os.path.join(ros_home, "guppy_abs.urdf")
-    # with open(tmp_urdf, "w") as f:
-    #     f.write(urdf_txt)
+    tmp_urdf = os.path.join(tempfile.TemporaryDirectory(), "guppy_abs.urdf")
+    with open(tmp_urdf, "w") as f:
+        f.write(urdf_txt)
 
     nodes = []
 
