@@ -33,7 +33,9 @@ def _nodes(context):
     urdf_txt = urdf_txt.replace(f"package://{model_package}/", "file://" + urdf_pkg_share + "/")
     urdf_txt = urdf_txt.replace(f"model://{model_package}/",   "file://" + urdf_pkg_share + "/")
 
-    tmp_urdf = os.path.join(tempfile.TemporaryDirectory().name, "auv.urdf")
+    tmp_dir = tempfile.TemporaryDirectory().name
+    os.mkdir(tmp_dir)
+    tmp_urdf = os.path.join(tmp_dir, "auv.urdf")
     with open(tmp_urdf, "w") as f:
         f.write(urdf_txt)
 
