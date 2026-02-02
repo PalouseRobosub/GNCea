@@ -50,6 +50,18 @@ source install/setup.bash
 
 Use whatever commands below to launch any desired launch file.
 
+# Main Launch File
+Here is an example launch file for a seperate project, that uses the `launch.py` file of GNCea:
+```xml
+<launch>
+    <include file="$(find-pkg-share gncea_description)/launch/launch.py">
+        <arg name="model" value="$(find-pkg-share guppy_description)/urdf/guppy.urdf"/>
+        <arg name="model_package" value="guppy_description"/>
+        <arg name="name" value="guppy"/>
+    </include>
+</launch>
+```
+
 # cube.urdf, an example AUV plugin implementation that is simple, not parameterized
 
 To launch
@@ -151,7 +163,7 @@ ros2 run gncea_description guppy_control_test.py
 To launch Woollet pool world:
 
 ```
-ros2 launch gncea_description guppy_woolletpool.launch.py 
+ros2 launch gncea_description launch.py
 ```
 
 To use sliders:
